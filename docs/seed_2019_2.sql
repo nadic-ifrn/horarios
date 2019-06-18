@@ -191,7 +191,9 @@ INSERT INTO periodos VALUES (32, 8, '8', 4, current_timestamp(), current_timesta
 INSERT INTO disciplinas (nome, ch_semanal, periodo_id, created_at, updated_at) VALUES
 ('Bioquímica', 3, 32, current_timestamp(), current_timestamp()),
 ('Química Ambiental', 3, 32, current_timestamp(), current_timestamp()),
-('LIBRAS', 2, 32, current_timestamp(), current_timestamp());
+('LIBRAS', 2, 32, current_timestamp(), current_timestamp()),
+('Eletiva II', 4, 32, current_timestamp(), current_timestamp()),
+('Eletiva III', 6, 32, current_timestamp(), current_timestamp());
 
 # TECNOLOGIA EM SI
 
@@ -210,14 +212,17 @@ INSERT INTO disciplinas (nome, ch_semanal, periodo_id, created_at, updated_at) V
 ('Programação Web II', 4, 36, current_timestamp(), current_timestamp()),
 ('Processo de Análise e Des. de Sistemas', 4, 36, current_timestamp(), current_timestamp()),
 ('Sistemas Distribuídos', 4, 36, current_timestamp(), current_timestamp()),
-('Engenharia de Software', 2, 36, current_timestamp(), current_timestamp());
+('Engenharia de Software', 2, 36, current_timestamp(), current_timestamp()),
+('Optativa I', 4, 36, current_timestamp(), current_timestamp());
 INSERT INTO periodos VALUES (38, 6, '6', 5, current_timestamp(), current_timestamp());
 INSERT INTO disciplinas (nome, ch_semanal, periodo_id, created_at, updated_at) VALUES
 ('Comércio Eletrônico', 2, 38, current_timestamp(), current_timestamp()),
 ('Tecnologias de Banco de Dados', 4, 38, current_timestamp(), current_timestamp()),
 ('Segurança e Preservação de Dados', 4, 38, current_timestamp(), current_timestamp()),
 ('Programação de Tec. Móveis e Sem Fio', 2, 38, current_timestamp(), current_timestamp()),
-('Eletiva', 4, 38, current_timestamp(), current_timestamp());
+('Optativa III', 4, 38, current_timestamp(), current_timestamp()),
+('Optativa IV', 2, 38, current_timestamp(), current_timestamp());
+
 
 # TECNOLOGIA EM ALIMENTOS
 
@@ -239,7 +244,7 @@ INSERT INTO disciplinas (nome, ch_semanal, periodo_id, created_at, updated_at) V
 ('Bioquímica dos Alimentos', 4, 42, current_timestamp(), current_timestamp()),
 ('Análise de alimentos', 6, 42, current_timestamp(), current_timestamp()),
 ('Termodinâmica Aplicada e Fenômenos de transportes', 4, 42, current_timestamp(), current_timestamp()),
-('Eletiva', 2, 42, current_timestamp(), current_timestamp());
+('Eletiva I', 2, 42, current_timestamp(), current_timestamp());
 INSERT INTO periodos VALUES (44, 6, '6', 6, current_timestamp(), current_timestamp());
 INSERT INTO disciplinas (nome, ch_semanal, periodo_id, created_at, updated_at) VALUES
 ('Gestão Ambiental', 4, 44, current_timestamp(), current_timestamp()),
@@ -248,7 +253,7 @@ INSERT INTO disciplinas (nome, ch_semanal, periodo_id, created_at, updated_at) V
 ('Higiene da Industria de Alimentos', 2, 44, current_timestamp(), current_timestamp()),
 ('Máquinas equipamentos e Instalações Industriais', 4, 44, current_timestamp(), current_timestamp()),
 ('Embalagens', 2, 44, current_timestamp(), current_timestamp()),
-('Eletiva', 4, 44, current_timestamp(), current_timestamp());
+('Eletiva III', 4, 44, current_timestamp(), current_timestamp());
 
 # LICENCIATURA EM QUÍMICA 2018
 

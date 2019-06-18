@@ -58,8 +58,8 @@
 			</tbody>
 		</table>
 		@if($dia->especial)
-		<h5>1.1. Regime Diferenciado</h5>
-		<p><a href="{{ action('AnexoController@visualizar', ['id' => $dia->anexo->id]) }}" class="card-link">Clique aqui</a> para visualizar o arquivo de autorização para regime diferenciado.</p>
+		<h5>1.1. Regime Diferenciado (Anexo)</h5>
+		<p><a href="{{ action('AnexoController@visualizar', ['id' => $dia->anexo->id]) }}" class="card-link">Clique aqui</a> para visualizar o arquivo de autorização para regime diferenciado ({{ $dia->anexo->comentario }}).</p>
 		@endif
 		<h5>2. Disciplinas</h5>
 		<table class="table">
