@@ -261,7 +261,7 @@ INSERT INTO periodos VALUES (46, 2, '2', 7, current_timestamp(), current_timesta
 INSERT INTO disciplinas (nome, ch_semanal, periodo_id, created_at, updated_at) VALUES
 ('Leitura e Escrita de Textos Acadêmicos de Divulgação Científica', 2, 46, current_timestamp(), current_timestamp()),
 ('Fundamentos da Educação II', 4, 46, current_timestamp(), current_timestamp()),
-('Química Geral I', 6, 46, current_timestamp(), current_timestamp()),
+('Química Geral II', 6, 46, current_timestamp(), current_timestamp()),
 ('Química Experimental II', 2, 46, current_timestamp(), current_timestamp()),
 ('Cálculo Diferencial e Integral I', 4, 46, current_timestamp(), current_timestamp());
 
