@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Horários IFRN/CN - @yield('titulo')</title>
+		<title>Horários IFRN/{{ Config::get('app.campus') }} - @yield('titulo')</title>
 		<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
@@ -12,13 +12,26 @@
 	<body>
 		<div class="container-fluid">
 			<!-- As a link -->
-			<nav class="navbar navbar-light bg-light">
-				<a class="navbar-brand" href="/">Horários CN</a>
+			<nav class="navbar navbar-expand navbar-light bg-light">
+				<a class="navbar-brand" href="/">Horários {{ Config::get('app.campus') }}</a>
 				@if (session()->has('usuario'))
 				<ul class="navbar-nav mr-auto">
 					<li class="nav-item">
 						<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{{ session()->get('usuario')->nome }} ({{ session()->get('usuario')->matricula }})</a>
 					</li>
+					@if (session()->get('usuario')->comissao)
+      				<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Comissão
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							<a class="dropdown-item" href="{{ action('CursoController@listar') }}">Gerenciar Cursos</a>
+							<a class="dropdown-item" href="{{ action('AnoLetivoController@listar') }}">Gerenciar Períodos Letivos</a>
+							<div class="dropdown-divider"></div>
+							<a class="dropdown-item" href="{{ action('AnoLetivoController@relatorios') }}">Relatórios e Exportação</a>
+						</div>
+      				</li>
+      				@endif
         		</ul>
 				<ul class="navbar-nav ml-auto">
 					<li class="nav-item">

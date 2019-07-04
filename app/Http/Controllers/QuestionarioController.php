@@ -20,7 +20,7 @@ class QuestionarioController extends Controller
 		if ($ano != null && !$ano->concluido) {
 			$dia = Dia::where('ano_letivo_id', $ano->id)->where('professor_id', session()->get('usuario')->id)
 					->first();
-			return view('questionario', compact('ano', 'dia'));
+			return view('questionario.questionario', compact('ano', 'dia'));
 		}
 		return redirect('/');
 	}
@@ -93,15 +93,15 @@ class QuestionarioController extends Controller
 	public function listar($idAnoLetivo) {
 		$ano = AnoLetivo::find($idAnoLetivo);
 		if ($ano != null) {
-			return view('listar', compact('ano'));
+			return view('questionario.listar', compact('ano'));
 		}
 		return redirect('/');
 	}
 
 	public function detalhar($id) {
 		$dia = Dia::find($id);
-		if ($dia != null && $dia->professor->id == session()->get('usuario')->id) {
-			return view('detalhar', compact('dia'));
+		if ($dia != null && ($dia->professor->id == session()->get('usuario')->id || session()->get('usuario')->comissao)) {
+			return view('questionario.detalhar', compact('dia'));
 		}
 		return redirect('/');
 	}

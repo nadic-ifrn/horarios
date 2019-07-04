@@ -8,7 +8,7 @@
 	<div class="card-header">Horários de CN</div>
 	<div class="card-body">
 		@foreach($anos as $ano)
-		<div class="card">
+		<div class="card" style="margin-bottom: 20px">
 			<div class="card-body">
 				<h5 class="card-title">
 					@if(!$ano->concluido)

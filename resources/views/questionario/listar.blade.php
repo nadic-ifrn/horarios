@@ -18,13 +18,13 @@
 	<div class="card-body">
 		<table class="table table-hover">
 			<tbody>
-				@forelse($ano->dias()->join('professors', 'professors.id', '=', 'dias.professor_id')->orderBy('professors.nome')->get() as $dia)
+				@forelse($ano->dias()->join('professors', 'professors.id', '=', 'dias.professor_id')->orderBy('professors.nome')->get(['dias.*']) as $dia)
 				<tr>
 					<td>{{ $dia->professor->nome }}</td>
 					<td><span class="badge badge-success">OK</span> em {{ $dia->updated_at }}</td>
-					<td>
-						@if($dia->professor->id == session()->get('usuario')->id)
-						<a href="{{ action('QuestionarioController@detalhar', ['id' => $dia->id]) }}" class="btn btn-success">Detalhar</a>
+					<td width="150px">
+						@if($dia->professor->id == session()->get('usuario')->id || session()->get('usuario')->comissao)
+						<a href="{{ action('QuestionarioController@detalhar', ['id' => $dia->id]) }}" class="btn btn-link">Detalhar</a>
 						@endif
 					</td>
 				</tr>

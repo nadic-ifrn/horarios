@@ -13,12 +13,15 @@ class UsuarioAutenticado
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $regra)
     {
         if ( session()->has('usuario') ) {
-            return $next($request);
-        } else {
-            return redirect('/');
+            if ( $regra == 'comissao' && session()->get('usuario')->comissao ) {
+                return $next($request);
+            } else if ( $regra == 'comum' ) {
+                return $next($request);
+            }
         }
+        return redirect('/');
     }
 }

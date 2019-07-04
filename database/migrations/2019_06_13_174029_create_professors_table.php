@@ -17,6 +17,7 @@ class CreateProfessorsTable extends Migration
             $table->bigIncrements('id');
             $table->string('nome', 200);
             $table->string('matricula', 30);
+            $table->boolean('comissao')->default(false);
             $table->timestamps();
         });
     }

@@ -124,7 +124,7 @@
 						<label for="q2_turma">Pesquisar por turma</label>
 						<select class="form-control" id="q2_turma">
 							<option value=""></option>
-							@foreach($ano->turmas as $turma)
+							@foreach($ano->turmas()->join('periodos', 'periodos.id', '=', 'turmas.periodo_id')->join('cursos', 'cursos.id', '=', 'periodos.curso_id')->orderBy('cursos.nome')->get(['turmas.*']) as $turma)
 							<option value="{{ $turma->id }}">{{ $turma->periodo->curso->nome }} ({{ $turma->periodo->curso->sigla }}.{{ substr($turma->periodo->nome, 0, 1) }}{{ $turma->turno }})</option>
 							@endforeach
 						</select>
