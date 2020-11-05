@@ -4,17 +4,8 @@
 
 @section('conteudo')
 
+<h4>Edição de Período Letivo</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col-6">
-				Edição de Período Letivo
-			</div>
-			<div class="col-6 text-right">
-				<a href="{{ action('AnoLetivoController@listar') }}" class="card-link">Voltar</a>
-			</div>
-		</div> 
-	</div>
 	<div class="card-body">
 		<form id="form" method="POST" action="{{ action('AnoLetivoController@salvar') }}">
 			{{ csrf_field() }}
@@ -36,7 +27,12 @@
 				<small id="concluido_help" class="form-text text-muted">Caso deseje fechar o questionário para novas submissões deve-se selecionar a opção Sim, do contrário Não é a opção mais coerente.</small>
 			</div>
 			<div class="text-right">
-				<button class="btn btn-primary" type="submit">Salvar</button>
+				<a href="{{ action('AnoLetivoController@listar') }}" class="btn btn-link">
+					<span class="nc-icon nc-minimal-left"></span> Voltar
+				</a>
+				<button class="btn btn-primary" type="submit">
+					<span class="nc-icon nc-check-2"></span> Salvar
+				</button>
 			</div>
 		</form>
 	</div>

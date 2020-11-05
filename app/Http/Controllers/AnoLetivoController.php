@@ -11,6 +11,7 @@ class AnoLetivoController extends Controller
     
 	public function listar() {
 		$anos = AnoLetivo::orderBy('ano')->orderBy('semestre')->get();
+		session()->put('sessao', 'anoletivo');
 		return view('ano_letivo.listar', compact('anos'));
 	}
 
@@ -53,6 +54,7 @@ class AnoLetivoController extends Controller
 
 	public function relatorios() {
 		$anos = AnoLetivo::orderBy('ano')->orderBy('semestre')->get();
+		session()->put('sessao', 'relatorios');
 		return view('ano_letivo.relatorios', compact('anos'));
 	}
 

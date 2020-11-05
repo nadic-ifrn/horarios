@@ -4,59 +4,124 @@
 		<title>Horários IFRN/{{ Config::get('app.campus') }} - @yield('titulo')</title>
 		<meta charset="utf-8">
     	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<!-- <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-		<link rel="stylesheet" href="/css/app.css">
+		<link rel="icon" type="image/png" href="/img/clock.png" />
+		<!--     Fonts and icons     -->
+		<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  		<link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  		<!-- CSS Files -->
+  		<link href="/assets/css/bootstrap.min.css" rel="stylesheet" />
+  		<link href="/assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
 		@yield('css')
 	</head>
 	<body>
-		<div class="container-fluid">
-			<!-- As a link -->
-			<nav class="navbar navbar-expand navbar-light bg-light">
-				<a class="navbar-brand" href="/">Horários {{ Config::get('app.campus') }}</a>
-				@if (session()->has('usuario'))
-				<ul class="navbar-nav mr-auto">
-					<li class="nav-item">
-						<a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{{ session()->get('usuario')->nome }} ({{ session()->get('usuario')->matricula }})</a>
-					</li>
-					@if (session()->get('usuario')->comissao)
-      				<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-							Comissão
-						</a>
-						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-							<a class="dropdown-item" href="{{ action('CursoController@listar') }}">Gerenciar Cursos</a>
-							<a class="dropdown-item" href="{{ action('AnoLetivoController@listar') }}">Gerenciar Períodos Letivos</a>
-							<div class="dropdown-divider"></div>
-							<a class="dropdown-item" href="{{ action('AnoLetivoController@relatorios') }}">Relatórios e Exportação</a>
+		<div class="wrapper">
+			@if (session()->has('usuario'))
+			<div class="sidebar" data-color="white" data-active-color="danger">
+				<div class="logo">
+					<a href="/" class="simple-text logo-mini">
+						<div class="logo-image-small">
+							<img src="/img/clock.png">
 						</div>
-      				</li>
-      				@endif
-        		</ul>
-				<ul class="navbar-nav ml-auto">
-					<li class="nav-item">
-						<a class="nav-link" href="{{ action('UsuarioController@sair') }}">Sair</a>
-					</li>
-				</ul>
-				@endif
-			</nav>
-			<div class="container" style="margin-top: 20px; margin-bottom: 20px">
-				@if (session()->has('flash'))
-				<div class="alert alert-{{ session()->get('flash')['tipo'] }} alert-dismissible fade show" role="alert">
-					{{ session()->get('flash')['mensagem'] }}
-					<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    					<span aria-hidden="true">&times;</span>
-  					</button>
+					</a>
+					<a href="/" class="simple-text logo-normal">
+						Horários {{ Config::get('app.campus') }}
+					</a>
 				</div>
-				@endif
-				@yield('conteudo')
+				<div class="sidebar-wrapper">
+					<ul class="nav">
+						<li class="{{ (session()->get('sessao') == 'inicio') ? 'active' : '' }}">
+							<a href="/">
+								<i class="nc-icon nc-shop"></i>
+								<p>Início</p>
+							</a>
+						</li>
+						@if (session()->get('usuario')->comissao)
+						<li class="{{ (session()->get('sessao') == 'curso') ? 'active' : '' }}">
+							<a href="{{ action('CursoController@listar') }}">
+								<i class="nc-icon nc-book-bookmark"></i>
+								<p>Cursos</p>
+							</a>
+						</li>
+						<li class="{{ (session()->get('sessao') == 'anoletivo') ? 'active' : '' }}">
+							<a href="{{ action('AnoLetivoController@listar') }}">
+								<i class="nc-icon nc-calendar-60"></i>
+								<p>Períodos Letivos</p>
+							</a>
+						</li>
+						<li class="{{ (session()->get('sessao') == 'relatorios') ? 'active' : '' }}">
+							<a href="{{ action('AnoLetivoController@relatorios') }}">
+								<i class="nc-icon nc-single-copy-04"></i>
+								<p>Relatórios</p>
+							</a>
+						</li>
+						@endif
+						<li>
+							<a href="{{ action('UsuarioController@sair') }}">
+								<i class="nc-icon nc-button-power"></i>
+								<p>Sair</p>
+							</a>
+						</li>
+					</ul>
+				</div>
 			</div>
-		</div>
-		
-		<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-		<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script> -->
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-		@yield('js')
+			@endif
+			@if (session()->has('usuario'))
+			<div class="main-panel" style="min-height: 100vh;">
+			@else
+			<div class="main-panel" style="height: 100vh; width: 100%;">
+			@endif
+				@if (session()->has('usuario'))
+				<nav class="navbar navbar-expand-lg navbar-absolute fixed-top navbar-transparent">
+					<div class="container-fluid">
+						<div class="navbar-wrapper">
+							<div class="navbar-toggle">
+								<button type="button" class="navbar-toggler">
+									<span class="navbar-toggler-bar bar1"></span>
+									<span class="navbar-toggler-bar bar2"></span>
+									<span class="navbar-toggler-bar bar3"></span>
+								</button>
+							</div>
+						</div>
+						<div class="justify-content-end">
+							<ul class="nav navbar-nav navbar-right">
+								<li>
+									<i class="nc-icon nc-single-02"></i>
+									<p>{{ session()->get('usuario')->nome }} ({{ session()->get('usuario')->matricula }})</p>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</nav>
+				@endif
+				<div class="content">
+					@yield('conteudo')
+				</div>
+				<footer class="footer footer-black footer-white">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="credits ml-auto">
+								<span class="copyright">
+									&copy; <script>document.write(new Date().getFullYear())</script>, template made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creative Tim</a>
+								</span>
+							</div>
+						</div>
+					</div>
+				</footer>
+			</div>
+		</div>	
+		<!--   Core JS Files   -->
+		<script src="/assets/js/core/jquery.min.js"></script>
+		<script src="/assets/js/core/popper.min.js"></script>
+		<script src="/assets/js/core/bootstrap.min.js"></script>
+		<script src="/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+		<!--  Notifications Plugin    -->
+		<script src="/assets/js/plugins/bootstrap-notify.js"></script>
+		<script src="/js/functions.js"></script>
+		<!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+		<script src="/assets/js/paper-dashboard.min.js?v=2.0.1"></script>
+		@if (session()->has('flash'))
+		<script>show_notification("{{ session()->get('flash')['tipo'] }}", "{{ session()->get('flash')['mensagem'] }}");</script>
+		@endif
 	</body>
+	@yield('js')
 </html>

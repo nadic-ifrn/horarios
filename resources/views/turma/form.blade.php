@@ -4,17 +4,8 @@
 
 @section('conteudo')
 
+<h4>Edição de Turma do Período Letivo {{ $ano->ano }}.{{ $ano->semestre }}</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col-6">
-				Edição de Turma do Período Letivo {{ $ano->ano }}.{{ $ano->semestre }}
-			</div>
-			<div class="col-6 text-right">
-				<a href="{{ action('TurmaController@listar', ['ano_letivo_id' => $ano->id]) }}" class="card-link">Voltar</a>
-			</div>
-		</div> 
-	</div>
 	<div class="card-body">
 		<form id="form" method="POST" action="{{ action('TurmaController@salvar') }}">
 			{{ csrf_field() }}
@@ -41,7 +32,12 @@
 				<input type="text" class="form-control" name="observacao" id="observacao" maxlength="200" value="{{ $turma->observacao }}">
 			</div>
 			<div class="text-right">
-				<button class="btn btn-primary" type="submit">Salvar</button>
+				<a href="{{ action('TurmaController@listar', ['ano_letivo_id' => $ano->id]) }}" class="btn btn-link">
+					<span class="nc-icon nc-minimal-left"></span> Voltar
+				</a>
+				<button class="btn btn-primary" type="submit">
+					<span class="nc-icon nc-check-2"></span> Salvar
+				</button>
 			</div>
 		</form>
 	</div>

@@ -4,17 +4,8 @@
 
 @section('conteudo')
 
+<h4>Edição de Curso</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col-6">
-				Edição de Curso
-			</div>
-			<div class="col-6 text-right">
-				<a href="{{ action('CursoController@listar') }}" class="card-link">Voltar</a>
-			</div>
-		</div> 
-	</div>
 	<div class="card-body">
 		<form id="form" method="POST" action="{{ action('CursoController@salvar') }}">
 			{{ csrf_field() }}
@@ -29,7 +20,12 @@
 				<small id="sigla_help" class="form-text text-muted">Tente usar um padrão de siglas para os cursos.</small>
 			</div>
 			<div class="text-right">
-				<button class="btn btn-primary" type="submit">Salvar</button>
+				<a href="{{ action('CursoController@listar') }}" class="btn btn-link">
+					<span class="nc-icon nc-minimal-left"></span> Voltar
+				</a>
+				<button class="btn btn-primary" type="submit">
+					<span class="nc-icon nc-check-2"></span> Salvar
+				</button>
 			</div>
 		</form>
 	</div>

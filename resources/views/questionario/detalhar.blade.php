@@ -4,18 +4,12 @@
 
 @section('conteudo')
 
+<h4>Detalhes de Questionário {{ $dia->ano_letivo->ano }}.{{ $dia->ano_letivo->semestre }}</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col-6">
-				Detalhes do Questionário {{ $dia->ano_letivo->ano }}.{{ $dia->ano_letivo->semestre }}
-			</div>
-			<div class="col-6 text-right">
-				<a href="{{ action('QuestionarioController@listar', ['idAnoLetivo' => $dia->ano_letivo->id]) }}" class="card-link">Voltar</a>
-			</div>
-		</div>
-	</div>
 	<div class="card-body">
+		<ul class="list-unstyled">
+			<li>Questionario do(a) professor(a) <b>{{ $dia->professor->nome }}</b>.</li>
+		</ul>
 		<h5>1. Dias da semana</h5>
 		<table class="table">
 			<thead>
@@ -59,7 +53,7 @@
 		</table>
 		@if($dia->especial)
 		<h5>1.1. Regime Diferenciado (Anexo)</h5>
-		<p><a href="{{ action('AnexoController@visualizar', ['id' => $dia->anexo->id]) }}" class="card-link">Clique aqui</a> para visualizar o arquivo de autorização para regime diferenciado ({{ $dia->anexo->comentario }}).</p>
+		<p><a href="{{ action('AnexoController@visualizar', ['id' => $dia->anexo->id]) }}" target="_autoblank" class="card-link">Clique aqui</a> para visualizar o arquivo de autorização para regime diferenciado ({{ $dia->anexo->comentario }}).</p>
 		@endif
 		<h5>2. Disciplinas</h5>
 		<table class="table">
@@ -88,6 +82,11 @@
 			Não há.
 			@endif
 		</p>
+		<div class="text-right">
+			<a href="{{ action('QuestionarioController@listar', ['idAnoLetivo' => $dia->ano_letivo->id]) }}" class="btn btn-link">
+				<span class="nc-icon nc-minimal-left"></span> Voltar
+			</a>
+		</div>
 	</div>
 </div>
 

@@ -7,14 +7,11 @@
 <div class="card">
 	<div class="card-header">
 		<div class="row">
-			<div class="col-6">
+			<div class="col-12">
 				Questionário {{ $ano->ano }}.{{ $ano->semestre }}
 				@if ($dia != null)
 				<span class="badge badge-success">Questionário já respondido em {{ $dia->updated_at }}</span>
 				@endif
-			</div>
-			<div class="col-6 text-right">
-				<a href="/" class="card-link">Voltar</a>
 			</div>
 		</div> 
 	</div>
@@ -141,7 +138,9 @@
 				</div>
 			</div>
 			<div class="text-right">
-				<button type="button" id="q2_add" class="btn btn-success">Adicionar</button>
+				<button type="button" id="q2_add" class="btn btn-success">
+					<span class="nc-icon nc-simple-add"></span> Adicionar
+				</button>
 			</div>
 			<ul class="list-group" id="q2_lista" style="margin-top: 20px; margin-bottom: 20px"></ul>
 			<small id="q2-error" class="text-danger" style="display: none">Adicione ao menos uma disciplina</small>
@@ -150,7 +149,12 @@
 				<textarea class="form-control" name="q3" id="q3"></textarea>
 			</div>
 			<div class="text-right">
-				<button type="submit" class="btn btn-primary">Enviar</button>
+				<a href="/" class="btn btn-link">
+					<span class="nc-icon nc-minimal-left"></span> Voltar
+				</a>
+				<button type="submit" class="btn btn-primary">
+					<span class="nc-icon nc-send"></span> Enviar
+				</button>
 			</div>
 		</form>
 	</div>

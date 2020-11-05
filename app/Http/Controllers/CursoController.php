@@ -10,6 +10,7 @@ class CursoController extends Controller
     
 	public function listar() {
 		$cursos = Curso::orderBy('nome')->get();
+		session()->put('sessao', 'curso');
 		return view('curso.listar', compact('cursos'));
 	}
 

@@ -4,17 +4,8 @@
 
 @section('conteudo')
 
+<h4>Edição de Disciplina do Período {{ $periodo->nome }} do Curso {{ $periodo->curso->nome }}</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col-6">
-				Edição de Disciplina do Período {{ $periodo->nome }} do Curso {{ $periodo->curso->nome }}
-			</div>
-			<div class="col-6 text-right">
-				<a href="{{ action('DisciplinaController@listar', ['periodo_id' => $periodo->id]) }}" class="card-link">Voltar</a>
-			</div>
-		</div> 
-	</div>
 	<div class="card-body">
 		<form id="form" method="POST" action="{{ action('DisciplinaController@salvar') }}">
 			{{ csrf_field() }}
@@ -30,7 +21,12 @@
 				<small id="ch_semanal_help" class="form-text text-muted">A carga horária semanal deve ser preencida com a quantidade de aulas semanais.</small>
 			</div>
 			<div class="text-right">
-				<button class="btn btn-primary" type="submit">Salvar</button>
+				<a href="{{ action('DisciplinaController@listar', ['periodo_id' => $periodo->id]) }}" class="btn btn-link">
+					<span class="nc-icon nc-minimal-left"></span> Voltar
+				</a>
+				<button class="btn btn-primary" type="submit">
+					<span class="nc-icon nc-check-2"></span> Salvar
+				</button>
 			</div>
 		</form>
 	</div>

@@ -4,14 +4,12 @@
 
 @section('conteudo')
 
+<h4>Turmas do Período Letivo {{ $ano->ano }}.{{ $ano->semestre }}</h4>
 <div class="card">
 	<div class="card-header">
 		<div class="row">
-			<div class="col-6">
-				Turmas do Período Letivo {{ $ano->ano }}.{{ $ano->semestre }}
-			</div>
 			<div class="col-6 text-right">
-				<a href="{{ action('AnoLetivoController@listar') }}" class="card-link">Voltar</a>
+				
 			</div>
 		</div> 
 	</div>
@@ -45,6 +43,9 @@
 			</tbody>
 		</table>
 		<div class="text-right">
+			<a href="{{ action('AnoLetivoController@listar') }}" class="btn btn-link">
+				<span class="nc-icon nc-minimal-left"></span> Voltar
+			</a>
 			<a href="{{ action('TurmaController@editar', ['ano_letivo_id' => $ano->id]) }}" class="btn btn-success">Adicionar Nova Turma</a>
 		</div>
 	</div>

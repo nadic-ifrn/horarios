@@ -4,17 +4,8 @@
 
 @section('conteudo')
 
+<h4>Edição de Período do Curso {{ $curso->nome }}</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col-6">
-				Edição de Período do Curso {{ $curso->nome }}
-			</div>
-			<div class="col-6 text-right">
-				<a href="{{ action('PeriodoController@listar', ['curso_id' => $curso->id]) }}" class="card-link">Voltar</a>
-			</div>
-		</div> 
-	</div>
 	<div class="card-body">
 		<form id="form" method="POST" action="{{ action('PeriodoController@salvar') }}">
 			{{ csrf_field() }}
@@ -30,7 +21,12 @@
 				<small id="nome_help" class="form-text text-muted">Nomes de períodos devem seguir o padrão descrito na tela de listagem de períodos.</small>
 			</div>
 			<div class="text-right">
-				<button class="btn btn-primary" type="submit">Salvar</button>
+				<a href="{{ action('PeriodoController@listar', ['curso_id' => $curso->id]) }}" class="btn btn-link">
+					<span class="nc-icon nc-minimal-left"></span> Voltar
+				</a>
+				<button class="btn btn-primary" type="submit">
+					<span class="nc-icon nc-check-2"></span> Salvar
+				</button>
 			</div>
 		</form>
 	</div>

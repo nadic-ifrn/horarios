@@ -4,17 +4,8 @@
 
 @section('conteudo')
 
+<h4>Disciplinas do Período {{ $periodo->nome }} do Curso {{ $periodo->curso->nome }}</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col-6">
-				Disciplinas do Período {{ $periodo->nome }} do Curso {{ $periodo->curso->nome }}
-			</div>
-			<div class="col-6 text-right">
-				<a href="{{ action('PeriodoController@listar', ['curso_id' => $periodo->curso->id]) }}" class="card-link">Voltar</a>
-			</div>
-		</div> 
-	</div>
 	<div class="card-body">
 		<ul class="list-unstyled">
 			<li>O período é formado por dois campos: <b>Ordem</b> e <b>Nome</b>;</li>
@@ -27,7 +18,7 @@
 				<tr>
 					<th>Nome</th>
 					<th>Carga Horária Semanal</th>
-					<th width="350px"></th>
+					<th width="400px"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -48,6 +39,9 @@
 			</tbody>
 		</table>
 		<div class="text-right">
+			<a href="{{ action('PeriodoController@listar', ['curso_id' => $periodo->curso->id]) }}" class="btn btn-link">
+				<span class="nc-icon nc-minimal-left"></span> Voltar
+			</a>
 			<a href="{{ action('DisciplinaController@editar', ['periodo_id' => $periodo->id]) }}" class="btn btn-success">Adicionar Nova Disciplina</a>
 		</div>
 	</div>

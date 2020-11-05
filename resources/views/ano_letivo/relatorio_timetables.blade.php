@@ -4,18 +4,12 @@
 
 @section('conteudo')
 
+<h4>Dados de Exportação do Período {{ $ano->ano }}.{{ $ano->semestre }}</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col-6">
-				Dados de exportação para o TimeTables do questionário para o período {{ $ano->ano }}.{{ $ano->semestre }}
-			</div>
-			<div class="col-6 text-right">
-				<a href="{{ action('AnoLetivoController@relatorios') }}" class="card-link">Voltar</a>
-			</div>
-		</div> 
-	</div>
 	<div class="card-body">
+		<ul class="list-unstyled">
+			<li><b class="badge badge-warning">Atenção</b> A exportação funciona apenas para o software Asc Timetables.</li>
+		</ul>
 		<table id="results" data-tableName="TimeTables Data" class="table table-hover">
 			<thead>
 				<tr>
@@ -54,6 +48,9 @@
 			</tbody>
 		</table>
 		<div class="text-right">
+			<a href="{{ action('AnoLetivoController@relatorios') }}" class="btn btn-link">
+				<span class="nc-icon nc-minimal-left"></span> Voltar
+			</a>
 			<a href="#" class="btn btn-success" data-clipboard-target="#results">Copiar para Área de Transferência</a>
 		</div>
 	</div>
@@ -68,6 +65,9 @@
 	var clipboard = new Clipboard('.btn');
 	clipboard.on('success', function(e) {
 	  e.clearSelection();
+	  alert("Dados copiados para a Área de Transferência!\nAbra o TimeTables e escolha a função " +
+	  		"\"Importar -> Importar da Área de Transferência (ou Clipboard)\", em seguida escolha a opção \"Lessons\", marque a opção " +
+			"\"Primeira linha contém o cabeçalho\", observe se a grade foi preenchida. Clique em \"Importar\"");
 	});
 </script>
 

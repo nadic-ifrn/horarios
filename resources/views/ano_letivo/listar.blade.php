@@ -4,17 +4,8 @@
 
 @section('conteudo')
 
+<h4>Períodos Letivo da Instituição</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col-6">
-				Períodos Letivos da Instituição
-			</div>
-			<div class="col-6 text-right">
-				<a href="/" class="card-link">Voltar</a>
-			</div>
-		</div> 
-	</div>
 	<div class="card-body">
 		<ul class="list-unstyled">
 			<li>Período letivo permite a abertura de novo questionário;</li>
@@ -25,7 +16,7 @@
 				<tr>
 					<th>Período</th>
 					<th>Situação</th>
-					<th width="350px"></th>
+					<th width="400px"></th>
 				</tr>
 			</thead>
 			<tbody>

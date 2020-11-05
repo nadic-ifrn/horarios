@@ -4,17 +4,8 @@
 
 @section('conteudo')
 
+<h4>Cursos da Instituição</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col-6">
-				Cursos da Instituição
-			</div>
-			<div class="col-6 text-right">
-				<a href="/" class="card-link">Voltar</a>
-			</div>
-		</div> 
-	</div>
 	<div class="card-body">
 		<ul class="list-unstyled">
 			<li>Os cursos dão origem às turmas que devem ser criadas nos períodos letivos, tornando possível a organização dos horários;</li>
@@ -25,7 +16,7 @@
 				<tr>
 					<th>Curso</th>
 					<th>Sigla</th>
-					<th width="350px"></th>
+					<th width="400px"></th>
 				</tr>
 			</thead>
 			<tbody>

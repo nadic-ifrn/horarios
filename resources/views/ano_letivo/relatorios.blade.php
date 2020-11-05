@@ -4,11 +4,11 @@
 
 @section('conteudo')
 
+<h4>Relatórios e Exportação</h4>
 <div class="card">
-	<div class="card-header">Relatórios e Exportação</div>
 	<div class="card-body">
-		@foreach($anos as $ano)
-		<div class="card" style="margin-bottom: 20px">
+		@forelse($anos as $ano)
+		<div class="card-plain">
 			<div class="card-body">
 				<h5 class="card-title">
 					@if(!$ano->concluido)
@@ -17,11 +17,18 @@
 					Período {{ $ano->ano }}.{{ $ano->semestre }}
 				</h5>
 				<p class="card-text">{{ (!$ano->concluido) ? 'O período ainda encontra-se aberto para submissão do questionário.' : 'O período encontra-se fechado.' }}</p>
-				<a href="{{ action('AnoLetivoController@relatorio_respostas', ['id' => $ano->id]) }}" class="card-link">Respostas ao questionário para o período</a><br />
+				<a href="{{ action('AnoLetivoController@relatorio_respostas', ['id' => $ano->id]) }}" class="card-link">Respostas ao questionário para o período</a>
 				<a href="{{ action('AnoLetivoController@relatorio_timetables', ['id' => $ano->id]) }}" class="card-link">Exportar dados para o TimeTables</a>
 			</div>
 		</div>
-		@endforeach
+		<hr />
+		@empty
+		<div class="card-plain">
+			<div class="card-body">
+				<p class="card-text">Não há períodos letivos criados.</p>
+			</div>
+		</div>
+		@endforelse
 	</div>
 </div>
 

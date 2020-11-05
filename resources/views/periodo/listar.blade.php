@@ -4,14 +4,12 @@
 
 @section('conteudo')
 
+<h4>Períodos do Curso {{ $curso->nome }}</h4>
 <div class="card">
 	<div class="card-header">
 		<div class="row">
-			<div class="col-6">
-				Períodos do Curso {{ $curso->nome }}
-			</div>
 			<div class="col-6 text-right">
-				<a href="{{ action('CursoController@listar') }}" class="card-link">Voltar</a>
+				
 			</div>
 		</div> 
 	</div>
@@ -27,7 +25,8 @@
 				<tr>
 					<th>Ordem</th>
 					<th>Nome</th>
-					<th width="350px"></th>
+					<th>Carga Horária</th>
+					<th width="400px"></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -35,6 +34,7 @@
 				<tr>
 					<td>{{ $periodo->ordem }}</td>
 					<td>{{ $periodo->nome }}</td>
+					<td>{{ $periodo->disciplinas()->sum('ch_semanal') }}</td>
 					<td>
 						<a href="{{ action('PeriodoController@excluir', ['id' => $periodo->id]) }}" class="btn btn-danger excluir">Excluir</a>
 						<a href="{{ action('PeriodoController@editar', ['curso_id' => $periodo->curso->id, 'id' => $periodo->id ]) }}" class="btn btn-warning">Editar</a>
@@ -49,6 +49,9 @@
 			</tbody>
 		</table>
 		<div class="text-right">
+			<a href="{{ action('CursoController@listar') }}" class="btn btn-link">
+				<span class="nc-icon nc-minimal-left"></span> Voltar
+			</a>
 			<a href="{{ action('PeriodoController@editar', ['curso_id' => $periodo->curso->id]) }}" class="btn btn-success">Adicionar Novo Período</a>
 		</div>
 	</div>

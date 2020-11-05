@@ -4,17 +4,8 @@
 
 @section('conteudo')
 
+<h4>Respostas ao Questionário do Período Letivo {{ $ano->ano }}.{{ $ano->semestre }}</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col-6">
-				Respostas ao questionário para o período {{ $ano->ano }}.{{ $ano->semestre }}
-			</div>
-			<div class="col-6 text-right">
-				<a href="{{ action('AnoLetivoController@relatorios') }}" class="card-link">Voltar</a>
-			</div>
-		</div> 
-	</div>
 	<div class="card-body">
 		<table class="table table-hover">
 			<thead>
@@ -68,6 +59,11 @@
 				@endforelse
 			</tbody>
 		</table>
+		<div class="text-right">
+			<a href="{{ action('AnoLetivoController@relatorios') }}" class="btn btn-link">
+				<span class="nc-icon nc-minimal-left"></span> Voltar
+			</a>
+		</div>
 	</div>
 </div>
 

@@ -4,11 +4,11 @@
 
 @section('conteudo')
 
+<h4>Início</h4>
 <div class="card">
-	<div class="card-header">Horários de CN</div>
 	<div class="card-body">
-		@foreach($anos as $ano)
-		<div class="card" style="margin-bottom: 20px">
+		@forelse($anos as $ano)
+		<div class="card-plain">
 			<div class="card-body">
 				<h5 class="card-title">
 					@if(!$ano->concluido)
@@ -23,7 +23,14 @@
 				<a href="{{ action('QuestionarioController@listar', ['id' => $ano->id]) }}" class="card-link">Visualizar</a>
 			</div>
 		</div>
-		@endforeach
+		<hr />
+		@empty
+		<div class="card-plain">
+			<div class="card-body">
+				<p class="card-text">Não há períodos letivos criados.</p>
+			</div>
+		</div>
+		@endforelse
 	</div>
 </div>
 

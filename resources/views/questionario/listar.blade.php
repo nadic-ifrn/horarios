@@ -4,19 +4,17 @@
 
 @section('conteudo')
 
+<h4>Submissões de Questionarios para o Período {{ $ano->ano }}.{{ $ano->semestre }}</h4>
 <div class="card">
-	<div class="card-header">
-		<div class="row">
-			<div class="col-6">
-				Submissões de Questionarios para o Período {{ $ano->ano }}.{{ $ano->semestre }}
-			</div>
-			<div class="col-6 text-right">
-				<a href="/" class="card-link">Voltar</a>
-			</div>
-		</div> 
-	</div>
 	<div class="card-body">
 		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>Professor</th>
+					<th>Data e Hora de Envio</th>
+					<th></th>
+				</tr>
+			</thead>
 			<tbody>
 				@forelse($ano->dias()->join('professors', 'professors.id', '=', 'dias.professor_id')->orderBy('professors.nome')->get(['dias.*']) as $dia)
 				<tr>
@@ -35,6 +33,11 @@
 				@endforelse
 			</tbody>
 		</table>
+		<div class="text-right">
+			<a href="/" class="btn btn-link">
+				<span class="nc-icon nc-minimal-left"></span> Voltar
+			</a>
+		</div>
 	</div>
 </div>
 
