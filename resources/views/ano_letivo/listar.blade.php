@@ -37,7 +37,7 @@
 				</tr>
 				@empty
 				<tr>
-					<td>Não há cursos nesta instituição.</td>
+					<td colspan="3">Não há ano letivo nesta instituição.</td>
 				</tr>
 				@endforelse
 			</tbody>
