@@ -52,7 +52,7 @@
 			<a href="{{ action('CursoController@listar') }}" class="btn btn-link">
 				<span class="nc-icon nc-minimal-left"></span> Voltar
 			</a>
-			<a href="{{ action('PeriodoController@editar', ['curso_id' => $periodo->curso->id]) }}" class="btn btn-success">Adicionar Novo Período</a>
+			<a href="{{ action('PeriodoController@editar', ['curso_id' => $curso->id]) }}" class="btn btn-success">Adicionar Novo Período</a>
 		</div>
 	</div>
 </div>
