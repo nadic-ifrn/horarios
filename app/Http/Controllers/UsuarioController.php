@@ -26,7 +26,6 @@ class UsuarioController extends Controller
 				session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Você não é docente e/ou não pertence ao campus '.Config::get('app.campus').'.']);
 			}
 		} catch (\Exception $e) {
-			die($e->getMessage());
 			session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Matrícula e/ou senha inválido(s).']);
 		}
 		return redirect('/');

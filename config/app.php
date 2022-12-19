@@ -237,6 +237,6 @@ return [
     |
     */
 
-    'campus' => 'CN',
+    'campus' => env('APP_CAMPUS', 'CN'),
 
 ];
