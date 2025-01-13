@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Classes\SUAPDocente;
+use App\Classes\SUAPClient;
 use App\Professor;
 use Config;
 
@@ -11,7 +11,7 @@ class UsuarioController extends Controller
 {
     
 	public function autenticar(Request $request) {
-		$suap = new SUAPDocente();
+		$suap = new SUAPClient();
 		try {
 			$token = $suap->autenticar($request->matricula, $request->senha);
 			$dados = $suap->getMeusDados();

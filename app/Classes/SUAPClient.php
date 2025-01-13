@@ -5,11 +5,11 @@ namespace App\Classes;
 use GuzzleHttp\Client;
 
 /**
- * Adaptação da biblioteca de Ivanilson Melo para docentes.
+ * Adaptação da biblioteca de Ivanilson Melo para nova autenticação.
  *
- * @author Equipe Aoga
+ * @author Equipe IFGym
  */
-class SUAPDocente
+class SUAPClient
 {
     /**
      * O token de acesso do usuário. Tokens tem 24 horas de validade.
@@ -30,7 +30,7 @@ class SUAPDocente
      *
      * @var string Endpoint de acesso ao suap.
      */
-    private $endpoint = 'https://suap.ifrn.edu.br/api/v2/';
+    private $endpoint = 'https://suap.ifrn.edu.br/api/';
 
     /**
      * Um cliente GuzzleHttp para fazer os requests HTTP.
@@ -75,14 +75,14 @@ class SUAPDocente
     {
         // Se estiver acessando com uma chave de acesso...
         if ($accessKey) {
-            $url = $this->endpoint.'autenticacao/acesso_responsaveis/';
+            $url = $this->endpoint.'edu/autenticacao/acesso-responsaveis/';
 
             $params = [
                 'matricula' => $username,
                 'chave'     => $password,
             ];
         } else {
-            $url = $this->endpoint.'autenticacao/token/';
+            $url = $this->endpoint.'token/pair';
 
             $params = [
                 'username' => $username,
@@ -91,7 +91,7 @@ class SUAPDocente
         }
 
         $response = $this->client->request('POST', $url, [
-            'form_params' => $params,
+            'json' => $params,
         ]);
 
         $data = false;
@@ -108,34 +108,6 @@ class SUAPDocente
         }
 
         return $data;
-    }
-
-    /**
-     * Renova o token de acesso a API.
-     */
-    public function refresh() {
-        if ($this->refresh != null) {
-            $url = $this->endpoint.'autenticacao/token/refresh/';
-
-            $params = [
-                'refresh' => $this->refresh,
-            ];
-
-            $response = $this->client->request('POST', $url, [
-                'form_params' => $params,
-            ]);
-
-            if ($response->getStatusCode() == 200) {
-                $data = json_decode($response->getBody(), true);
-
-                if (isset($data['access'])) {
-                    $this->setAccess($data['access']);
-                }
-
-                return $data;
-            }
-        }
-        return false;
     }
 
     /**
@@ -165,48 +137,9 @@ class SUAPDocente
      */
     public function getMeusDados()
     {
-        $url = $this->endpoint.'minhas-informacoes/meus-dados/';
+        $url = $this->endpoint.'rh/meus-dados/';
 
         return $this->doGetRequest($url);
-    }
-
-    /**
-     * Pega os dados pessoais de um determinado aluno a partir de sua matrícula.
-     *
-     * @param string $matricula Matrícula do aluno.
-     *
-     * @return array $data Dados pessoais do aluno.
-     */
-    public function getDadosAluno($matricula)
-    {
-        $url = $this->endpoint.'edu/alunos/'.$matricula.'/';
-
-        return $this->doGetRequest($url);
-    }
-
-    /**
-     * Pega os diários do docente para.
-     *
-     * @param int $ano Ano letivo.
-     * @param int $periodo Período letivo.
-     *
-     * @return array $data Boletim do aluno.
-     */
-    public function getMeusDiarios($ano, $periodo)
-    {
-        $url = $this->endpoint.'minhas-informacoes/meus-diarios/'.$ano.'/'.$periodo.'/';
-        $diarios = $this->doGetRequest($url);
-        $turmas = [];
-
-        foreach ($diarios as $diario) {
-            $turmas[] = [
-                'id' => $diario['id'],
-                'componente_curricular' => $diario['componente_curricular'],
-                'participantes' => $diario['participantes']
-            ];
-        }
-
-        return $turmas;
     }
 
     /**
