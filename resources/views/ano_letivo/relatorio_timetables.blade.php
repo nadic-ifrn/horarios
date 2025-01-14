@@ -66,7 +66,7 @@
 	clipboard.on('success', function(e) {
 	  e.clearSelection();
 	  alert("Dados copiados para a Área de Transferência!\nAbra o TimeTables e escolha a função " +
-	  		"\"Importar -> Importar da Área de Transferência (ou Clipboard)\", em seguida escolha a opção \"Lessons\", marque a opção " +
+	  		"\"Importar -> Importar da Área de Transferência (ou Clipboard)\", em seguida escolha a opção \"Lessons (Aulas)\" marque a opção " +
 			"\"Primeira linha contém o cabeçalho\", observe se a grade foi preenchida. Clique em \"Importar\"");
 	});
 </script>

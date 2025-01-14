@@ -238,5 +238,8 @@ return [
     */
 
     'campus' => env('APP_CAMPUS', 'CN'),
+    'periodos_m' => env('APP_PERIODOS_M', '6'),
+    'periodos_t' => env('APP_PERIODOS_T', '6'),
+    'periodos_n' => env('APP_PERIODOS_N', '4')
 
 ];

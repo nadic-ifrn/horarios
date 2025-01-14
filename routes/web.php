@@ -56,6 +56,7 @@ Route::group(['middleware' => 'usuario:comum'], function() {
 
 		Route::get('/ano_letivo/relatorios', 'AnoLetivoController@relatorios');
 		Route::get('/ano_letivo/relatorio_respostas/{id}', 'AnoLetivoController@relatorio_respostas');
-		Route::get('/ano_letivo/relatorio_timetables/{id}', 'AnoLetivoController@relatorio_timetables');
+		Route::get('/ano_letivo/relatorio_exportar/{id}', 'AnoLetivoController@relatorio_exportar');
+		//Route::get('/ano_letivo/relatorio_timetables/{id}', 'AnoLetivoController@relatorio_timetables');
 	});
 });
