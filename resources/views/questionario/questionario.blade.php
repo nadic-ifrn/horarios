@@ -21,7 +21,7 @@
 			<input type="hidden" name="id" value="{{ $ano->id }}">
 			<ul class="list-unstyled">
 				<li>Os dias pretendidos serão formados por dois grupos: Segunda à Quarta ou Quarta à Sexta;</li>
-				<li>Confecção do horário tomará com base a <b>RESOLUÇÃO 01/2018 da DG/CN/IFRN</b>;</li>
+				<li>Confecção do horário tomará com base a <b>RESOLUÇÃO</b>, se houver, do campus referente a este tema;</li>
 				<li>Professores com <b>Afastamento Parcial</b>, deverão apresentar a <b>portaria</b> (Regime Diferenciado);</li>
 				<li><b class="badge badge-warning">Atenção</b> Se estiver respondendo novamente o questionário, as respostas anteriores serão substituídas pelas atuais.</li>
 			</ul>
