@@ -111,7 +111,7 @@
 				</div>
 				<div class="form-group" style="margin-top: 10px">
 					<label for="q1_2_c">Descrição do arquivo de autorização</label>
-					<input type="text" class="form-control" name="q1_2_comentario" id="q1_2_c">
+					<input type="text" class="form-control" name="q1_2_comentario" maxlength="200" id="q1_2_c">
 				</div>
 			</div>
 			<h5 style="padding-bottom: 10px; padding-top: 20px">2. Seleção das disciplinas <sup class="required">*</sup></h5>
