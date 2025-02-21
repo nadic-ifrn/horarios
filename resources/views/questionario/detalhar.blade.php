@@ -83,7 +83,7 @@
 			@endif
 		</p>
 		<div class="text-right">
-			<a href="{{ action('QuestionarioController@listar', ['idAnoLetivo' => $dia->ano_letivo->id]) }}" class="btn btn-link">
+			<a href="javascript:window.history.back()" class="btn btn-link">
 				<span class="nc-icon nc-minimal-left"></span> Voltar
 			</a>
 		</div>

@@ -18,6 +18,7 @@
 					<th>QUI</th>
 					<th>SEX</th>
 					<th>Observação</th>
+					<th></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -51,6 +52,9 @@
 						@endif
 					</td>
 					<td>{{ $dia->observacao }}</td>
+					<td>
+						<a href="{{ action('QuestionarioController@detalhar', ['id' => $dia->id]) }}" class="btn btn-link">Detalhar</a>
+					</td>
 				</tr>
 				@empty
 				<tr>
