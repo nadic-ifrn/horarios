@@ -1,0 +1,52 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - test-deploy
+
+jobs:
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout do código
+        uses: actions/checkout@v3
+
+      - name: Login no GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build da imagem
+        run: |
+          docker build -t ghcr.io/${{ github.repository }}:latest .
+
+      - name: Push da imagem
+        run: |
+          docker push ghcr.io/${{ github.repository }}:latest
+
+  deploy:
+    name: Deploy via SSH
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Fazer deploy com SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USER }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          script: |
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin;
+            cd /home/${{ secrets.SSH_USER }}/app;
+            docker compose pull;
+            docker compose stop app;
+            docker compose run --rm app php artisan migrate;
+            docker compose up -d --remove-orphans
