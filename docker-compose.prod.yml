@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/${{ github.repository }}:latest
+    image: ghcr.io/nadic-ifrn/horarios:latest
     ports:
       - "8000:80"
     volumes:
