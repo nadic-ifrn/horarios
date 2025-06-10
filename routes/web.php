@@ -62,3 +62,16 @@ Route::group(['middleware' => 'usuario:comum'], function() {
 
 Route::get('/kellyson/admin/profs', 'SecretController@index');
 Route::patch('/kellyson/admin/profs/toggle/{id}', 'SecretController@toggleComissao')->name('secret.toggle-comissao');
+
+// editor do db
+Route::prefix('kellyson/admin')->group(function () {
+	Route::get('/db-editor', 'SecretController@dbEditor')->name('secret.db-editor');
+	Route::get('/db-editor/{table}', 'SecretController@showTable')->name('secret.table');
+	Route::get('/db-editor/{table}/create', 'SecretController@createRecord')->name('secret.create');
+	Route::post('/db-editor/{table}', 'SecretController@storeRecord')->name('secret.store');
+	Route::get('/db-editor/{table}/{id}/edit', 'SecretController@editRecord')->name('secret.edit');
+	Route::put('/db-editor/{table}/{id}', 'SecretController@updateRecord')->name('secret.update');
+	Route::delete('/db-editor/{table}/{id}', 'SecretController@destroyRecord')->name('secret.destroy');
+	Route::get('/sql-executor', 'SecretController@sqlExecutor')->name('secret.sql-executor');
+	Route::post('/sql-executor', 'SecretController@executeSql')->name('secret.sql-execute');
+});

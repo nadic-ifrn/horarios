@@ -4,7 +4,19 @@
 
 @section('conteudo')
 
-<h3>Professores</h3>
+<div class="row mb-3">
+    <div class="col-md-6">
+        <h3>Professores</h3>
+    </div>
+    <div class="col-md-6 text-right">
+        <a href="{{ route('secret.db-editor') }}" class="btn btn-info">
+            <i class="nc-icon nc-settings"></i> Editor de Banco
+        </a>
+        <a href="{{ route('secret.sql-executor') }}" class="btn btn-warning">
+            <i class="nc-icon nc-caps-small"></i> Executor SQL
+        </a>
+    </div>
+</div>
 
 <table class="table">
     <tr>
