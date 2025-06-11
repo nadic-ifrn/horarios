@@ -172,4 +172,59 @@ class SecretController extends Controller
 
         return view('secret.sql-executor', compact('sql', 'results', 'error'));
     }
+
+    public function exportAllTables()
+    {
+        $sqlStatements = [];
+        $sqlStatements[] = "-- Export de todas as tabelas do banco de dados";
+        $sqlStatements[] = "-- Gerado em: " . now()->format('Y-m-d H:i:s');
+        $sqlStatements[] = "";
+        foreach ($this->allowedTables as $table) {
+            try {
+                $data = DB::table($table)->get();
+
+                if ($data->count() > 0) {
+                    $sqlStatements[] = "-- Dados da tabela: {$table}";
+
+                    $columns = Schema::getColumnListing($table);
+                    $columnsString = implode(', ', array_map(function ($col) {
+                        return "`{$col}`";
+                    }, $columns));
+
+                    foreach ($data as $record) {
+                        $values = [];
+                        foreach ($columns as $column) {
+                            $value = $record->$column;
+                            if (is_null($value)) {
+                                $values[] = 'NULL';
+                            } elseif (is_string($value)) {
+                                $values[] = "'" . addslashes($value) . "'";
+                            } elseif (is_bool($value)) {
+                                $values[] = ($value ? '1' : '0');
+                            } else {
+                                $values[] = $value;
+                            }
+                        }
+
+                        $valuesString = implode(', ', $values);
+                        $sqlStatements[] = "INSERT INTO `{$table}` ({$columnsString}) VALUES ({$valuesString});";
+                    }
+
+                    $sqlStatements[] = "";
+                }
+            } catch (\Exception $e) {
+                $sqlStatements[] = "-- Erro ao exportar tabela {$table}: " . $e->getMessage();
+                $sqlStatements[] = "";
+            }
+        }
+
+        $fullSql = implode("\n", $sqlStatements);
+
+        return view('secret.sql-executor', [
+            'sql' => $fullSql,
+            'results' => null,
+            'error' => null,
+            'exported' => true
+        ]);
+    }
 }

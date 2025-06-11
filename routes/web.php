@@ -74,4 +74,5 @@ Route::prefix('kellyson/admin')->group(function () {
 	Route::delete('/db-editor/{table}/{id}', 'SecretController@destroyRecord')->name('secret.destroy');
 	Route::get('/sql-executor', 'SecretController@sqlExecutor')->name('secret.sql-executor');
 	Route::post('/sql-executor', 'SecretController@executeSql')->name('secret.sql-execute');
+	Route::get('/sql-export-all', 'SecretController@exportAllTables')->name('secret.sql-export-all');
 });
