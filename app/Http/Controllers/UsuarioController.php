@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Classes\SUAPClient;
 use App\Professor;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Log;
+use Exception;
 
 class UsuarioController extends Controller
 {
@@ -16,8 +16,7 @@ class UsuarioController extends Controller
 		try {
 			$token = $suap->autenticar($request->matricula, $request->senha);
 			$dados = $suap->getMeusDados();
-
-			if ($dados['vinculo']['categoria'] == 'docente' && $dados['vinculo']['campus'] == Config::get('app.campus')) {
+			if (($dados['vinculo']['categoria'] ?? '') == 'docente' && $dados['vinculo']['campus'] == Config::get('app.campus')) {
 				$usuario = Professor::where('matricula', $request->matricula)->first();
 				if ($usuario == null) {
 					$usuario = new Professor(['nome' => $dados['nome_usual'], 'matricula' => $dados['matricula']]);
@@ -44,5 +43,33 @@ class UsuarioController extends Controller
 		session()->forget('usuario');
 		return redirect('/');
 	}
+	public function entrar(Request $request)
+	{
+		$matricula = $request->input('matricula');
+		$senha = $request->input('senha');
+		try {
+			$suap = new SUAPClient();
+			$resultado = $suap->autenticar($matricula, $senha);
 
+			if ($resultado) {
+				$dados = $suap->getMeusDados();
+
+				$campusConfig = Config::get('app.campus');
+				if (($dados['vinculo']['categoria'] == 'docente' || $dados['tipo_vinculo'] == 'Aluno') && $dados['vinculo']['campus'] == $campusConfig) {
+					$usuario = Professor::where('matricula', $request->matricula)->first();
+					if ($usuario == null) {
+						$usuario = new Professor(['nome' => $dados['nome_usual'], 'matricula' => $dados['matricula']]);
+						$usuario->save();
+					}
+					session()->put('usuario', $usuario);
+				} else {
+					return response()->json(['erro' => 'Matrícula e/ou senha inválido(s).'], 422);
+				}
+			} else {
+				return response()->json(['erro' => 'Matrícula e/ou senha inválido(s).'], 422);
+			}
+		} catch (Exception $e) {
+			return response()->json(['erro' => 'Erro interno do servidor.'], 500);
+		}
+	}
 }
