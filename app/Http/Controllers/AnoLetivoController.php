@@ -62,26 +62,44 @@ class AnoLetivoController extends Controller
 		session()->put('sessao', 'relatorios');
 		return view('ano_letivo.relatorios', compact('anos'));
 	}
-
-	private function gerar_restricao_dias($professor_id, $ano_letivo_id) {
+	private function gerar_restricao_dias($professor_id, $ano_letivo_id)
+	{
 		$dia = Dia::where('professor_id', $professor_id)
 				->where('ano_letivo_id', $ano_letivo_id)
 				->first();
-		$periodos = Config::get('app.periodos_m') + Config::get('app.periodos_t') + Config::get('app.periodos_n');
+
+		// Se não encontrar o dia, usa valores padrão (todos os dias disponíveis)
+		if (!$dia) {
+			$seg = $ter = $qua = $qui = $sex = 1;
+		} else {
+			$seg = $dia->seg;
+			$ter = $dia->ter;
+			$qua = $dia->qua;
+			$qui = $dia->qui;
+			$sex = $dia->sex;
+		}
+
+		$periodos_m = (int) Config::get('app.periodos_m', 6);
+		$periodos_t = (int) Config::get('app.periodos_t', 6);
+		$periodos_n = (int) Config::get('app.periodos_n', 4);
+		$periodos = $periodos_m + $periodos_t + $periodos_n;
 		$restr = '';
-		$restr .= '.'.(($dia->seg) ? $this->gerar_valores_restricao($periodos, '1') : $this->gerar_valores_restricao($periodos, '0')).',';
-		$restr .= '.'.(($dia->ter) ? $this->gerar_valores_restricao($periodos, '1') : $this->gerar_valores_restricao($periodos, '0')).',';
-		$restr .= '.'.(($dia->qua) ? $this->gerar_valores_restricao($periodos, '1') : $this->gerar_valores_restricao($periodos, '0')).',';
-		$restr .= '.'.(($dia->qui) ? $this->gerar_valores_restricao($periodos, '1') : $this->gerar_valores_restricao($periodos, '0')).',';
-		$restr .= '.'.(($dia->sex) ? $this->gerar_valores_restricao($periodos, '1') : $this->gerar_valores_restricao($periodos, '0'));
+		$restr .= '.' . (($seg) ? $this->gerar_valores_restricao($periodos, '1') : $this->gerar_valores_restricao($periodos, '0')) . ',';
+		$restr .= '.' . (($ter) ? $this->gerar_valores_restricao($periodos, '1') : $this->gerar_valores_restricao($periodos, '0')) . ',';
+		$restr .= '.' . (($qua) ? $this->gerar_valores_restricao($periodos, '1') : $this->gerar_valores_restricao($periodos, '0')) . ',';
+		$restr .= '.' . (($qui) ? $this->gerar_valores_restricao($periodos, '1') : $this->gerar_valores_restricao($periodos, '0')) . ',';
+		$restr .= '.' . (($sex) ? $this->gerar_valores_restricao($periodos, '1') : $this->gerar_valores_restricao($periodos, '0'));
 		return $restr;
 	}
-
 	private function gerar_restricao_horarios($turma) {
+		$periodos_m = (int) Config::get('app.periodos_m', 6);
+		$periodos_t = (int) Config::get('app.periodos_t', 6);
+		$periodos_n = (int) Config::get('app.periodos_n', 4);
+
 		$restr_aux = '';
-		$restr_aux .= '.'.(($turma->turno == 'M') ? $this->gerar_valores_restricao(Config::get('app.periodos_m'), '1') : $this->gerar_valores_restricao(Config::get('app.periodos_m'), '0'));
-		$restr_aux .= ($turma->turno == 'T') ? $this->gerar_valores_restricao(Config::get('app.periodos_t'), '1') : $this->gerar_valores_restricao(Config::get('app.periodos_t'), '0');
-		$restr_aux .= ($turma->turno == 'N') ? $this->gerar_valores_restricao(Config::get('app.periodos_n'), '1') : $this->gerar_valores_restricao(Config::get('app.periodos_n'), '0');
+		$restr_aux .= '.' . (($turma->turno == 'M') ? $this->gerar_valores_restricao($periodos_m, '1') : $this->gerar_valores_restricao($periodos_m, '0'));
+		$restr_aux .= ($turma->turno == 'T') ? $this->gerar_valores_restricao($periodos_t, '1') : $this->gerar_valores_restricao($periodos_t, '0');
+		$restr_aux .= ($turma->turno == 'N') ? $this->gerar_valores_restricao($periodos_n, '1') : $this->gerar_valores_restricao($periodos_n, '0');
 		$restr = '';
 		for ($i=0; $i<5; $i++) {
 			$restr .= $restr_aux;
@@ -91,8 +109,8 @@ class AnoLetivoController extends Controller
 		}
 		return $restr;
 	}
-
 	private function gerar_valores_restricao($qtd, $valor) {
+		$qtd = (int) $qtd; // Garante que seja um número inteiro
 		$res = '';
 		for ($i=0; $i<$qtd; $i++) {
 			$res .= $valor;
