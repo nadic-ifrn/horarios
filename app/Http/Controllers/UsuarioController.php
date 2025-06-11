@@ -5,17 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Classes\SUAPClient;
 use App\Professor;
-use Config;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 
 class UsuarioController extends Controller
 {
-    
-	public function autenticar(Request $request) {
+	public function autenticar(Request $request)
+	{
 		$suap = new SUAPClient();
 		try {
 			$token = $suap->autenticar($request->matricula, $request->senha);
 			$dados = $suap->getMeusDados();
+
 			if ($dados['vinculo']['categoria'] == 'docente' && $dados['vinculo']['campus'] == Config::get('app.campus')) {
+				$usuario = Professor::where('matricula', $request->matricula)->first();
+				if ($usuario == null) {
+					$usuario = new Professor(['nome' => $dados['nome_usual'], 'matricula' => $dados['matricula']]);
+					$usuario->save();
+				}
+				session()->put('usuario', $usuario);
+			} elseif ($dados['tipo_vinculo'] == 'Aluno' && $dados['vinculo']['campus'] == Config::get('app.campus')) {
 				$usuario = Professor::where('matricula', $request->matricula)->first();
 				if ($usuario == null) {
 					$usuario = new Professor(['nome' => $dados['nome_usual'], 'matricula' => $dados['matricula']]);
