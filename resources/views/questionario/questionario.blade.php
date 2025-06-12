@@ -13,7 +13,7 @@
 				<span class="badge badge-success">Questionário já respondido em {{ $dia->updated_at }}</span>
 				@endif
 			</div>
-		</div> 
+		</div>
 	</div>
 	<div class="card-body">
 		<form id="questionario" enctype="multipart/form-data" method="POST" action="{{ action('QuestionarioController@submeter') }}">
@@ -23,8 +23,52 @@
 				<li>Os dias pretendidos serão formados por dois grupos: Segunda à Quarta ou Quarta à Sexta;</li>
 				<li>Confecção do horário tomará com base a <b>RESOLUÇÃO</b>, se houver, do campus referente a este tema;</li>
 				<li>Professores com <b>Afastamento Parcial</b>, deverão apresentar a <b>portaria</b> (Regime Diferenciado);</li>
-				<li><b class="badge badge-warning">Atenção</b> Se estiver respondendo novamente o questionário, as respostas anteriores serão substituídas pelas atuais.</li>
 			</ul>
+
+			<div style="margin: 15px 0; padding: 15px; background-color: #fff3cd; border-left: 3px solid #ffc107; border-radius: 5px;">
+				<h6 style="color: #856404; margin-bottom: 10px;"><b><i class="nc-icon nc-alert-circle-i" style="margin-right: 5px;"></i>Atenção</b></h6>
+				<p style="color: #856404; margin-bottom: 0;">Se estiver respondendo novamente o questionário, as respostas anteriores serão substituídas pelas atuais.</p>
+			</div>
+
+			<div style="margin-top: 15px; margin-bottom: 15px;">
+				<h6><b>Informações Importantes:</b></h6>
+				<ul class="list-unstyled" style="margin-left: 15px;">
+					<li>• Cada grupo ou Curso deve organizar a distribuição de disciplinas de forma que fique equilibrada a opção de dias da semana. Sendo assim, o horário poderá ser confeccionado sem choques e necessidade de trocas de dias e/ou turmas.</li>
+					<li style="margin-top: 10px;">• Caso haja necessidade você pode informar neste formulário restrições de dias e horários disponíveis para suas atividades em sala de aula.</li>
+				</ul>
+			</div>
+
+			<div style="margin-bottom: 15px;">
+				<h6><b>Tipos de Restrições:</b></h6>
+				<ul class="list-unstyled" style="margin-left: 15px;">
+					<li><b>I -</b> Por necessidade comprovada: tratamento ou acompanhamento de dependentes em tratamento de saúde, Coordenação de curso, ação de desenvolvimento em serviço, entre outros. Isso mediante envio de documento comprobatório. Exceto no caso de Coordenação de Curso.</li>
+					<li style="margin-top: 8px;"><b>II -</b> Em função de ter trabalhado em horários críticos no semestre anterior - desde que tenha ocorrido por no mínimo 75% do período.</li>
+				</ul>
+			</div>
+
+			<details style="margin-bottom: 15px;">
+				<summary style="cursor: pointer; color: #007bff; font-weight: bold; padding: 8px 0;">Definição de Horários Críticos</summary>
+				<div style="margin-top: 10px; padding: 15px; background-color: #f8f9fa; border-left: 3px solid #007bff;">
+					<p style="margin-bottom: 15px;"><b>Entende-se por horário crítico</b> aquele no qual o deslocamento do(a) servidor(a) de casa ao trabalho (e vice-versa) é induzido a ocorrer muito cedo da manhã ou muito tarde da noite.</p>
+
+					<h6><b>São considerados horários críticos:</b></h6>
+					<ul style="margin-bottom: 15px;">
+						<li><b>I.</b> Os dois primeiros horários da segunda-feira pela manhã (para quem fica de segunda à quarta).</li>
+						<li><b>II.</b> Os dois últimos horários da quarta-feira à tarde e os quatro da noite (para quem fica de segunda à quarta).</li>
+						<li><b>III.</b> Os dois primeiros horários da quarta-feira pela manhã (para quem fica de quarta à sexta).</li>
+						<li><b>IV.</b> Os dois últimos horários da sexta-feira à tarde e os quatro da noite (para quem fica de quarta à sexta).</li>
+					</ul>
+
+					<h6><b>Rodízio de Horários Críticos:</b></h6>
+					<p style="margin-bottom: 10px;">Os horários definidos como críticos serão preenchidos obedecendo um rodízio, de modo a evitar que um(a) mesmo(a) professor(a) tenha aulas nesses horários em semestres seguidos, <b>exceto quando:</b></p>
+					<ul>
+						<li><b>I -</b> Não requerido pelo(a) docente no formulário;</li>
+						<li><b>II -</b> No semestre anterior o(a) docente trabalhou em horários críticos em um percentual menor que 75% do semestre letivo;</li>
+						<li><b>III -</b> Quando não for possível organizar o horário levando isso em consideração.</li>
+					</ul>
+				</div>
+			</details>
+
 			<hr />
 			<small class="required">* Campos obrigatórios.</small>
 			<h5 style="padding-bottom: 10px; padding-top: 20px">1. Escolha dos dias da semana <sup class="required">*</sup></h5>
@@ -104,15 +148,6 @@
 						</div>
 					</div>
 				</fieldset>
-				<h5 style="padding-bottom: 10px; padding-top: 20px">1.2. Autorização da DIAC (portaria de afastamento parcial ou outros, em formato PDF) <sup class="required">*</sup></h5>
-				<div class="custom-file">
-					<input type="file" accept=".pdf" class="custom-file-input" name="q1_2" id="q1_2" lang="pt-BR">
-					<label class="custom-file-label" for="q1_2">Escolha o arquivo</label>
-				</div>
-				<div class="form-group" style="margin-top: 10px">
-					<label for="q1_2_c">Descrição do arquivo de autorização</label>
-					<input type="text" class="form-control" name="q1_2_comentario" maxlength="200" id="q1_2_c">
-				</div>
 			</div>
 			<h5 style="padding-bottom: 10px; padding-top: 20px">2. Seleção das disciplinas <sup class="required">*</sup></h5>
 			<div class="row">
@@ -147,6 +182,20 @@
 			<h5 style="padding-bottom: 10px; padding-top: 20px">3. Observações</h5>
 			<div class="form-group">
 				<textarea class="form-control" name="q3" id="q3"></textarea>
+			</div>
+			<h5 style="padding-bottom: 10px; padding-top: 20px">4. Autorização da DIAC (portaria de afastamento parcial ou outros, em formato PDF)</h5>
+			<div style="margin-bottom: 15px; padding: 15px; background-color: #e7f3ff; border-left: 3px solid #007bff; border-radius: 5px;">
+				<h6 style="color: #0056b3; margin-bottom: 10px;"><b>Observação:</b></h6>
+				<p style="margin-bottom: 10px; color: #0056b3;">Tenho restrições de determinados dias da semana e horários por necessidade comprovada.</p>
+				<p style="margin-bottom: 0; color: #0056b3;">Caso tenha necessidade de enviar mais de um documento é necessário que este seja compilado em um único PDF.</p>
+			</div>
+			<div class="custom-file">
+				<input type="file" accept=".pdf" class="custom-file-input" name="q4" id="q4" lang="pt-BR">
+				<label class="custom-file-label" for="q4">Escolha o arquivo</label>
+			</div>
+			<div class="form-group" style="margin-top: 10px">
+				<label for="q4_comentario">Descrição do arquivo de autorização</label>
+				<input type="text" class="form-control" name="q4_comentario" maxlength="200" id="q4_comentario">
 			</div>
 			<div class="text-right">
 				<a href="/" class="btn btn-link">
