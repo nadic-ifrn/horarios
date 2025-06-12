@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class SecretController extends Controller
+class AdminController extends Controller
 {
     private $allowedTables = [
         'professors',
@@ -20,11 +20,10 @@ class SecretController extends Controller
         'anexos'
     ];
 
-    public function index()
+    public function usuarios()
     {
         $professores = DB::table('professors')->get();
-
-        return view('secret.professores', compact('professores'));
+        return view('admin.usuarios', compact('professores'));
     }
 
     public function toggleComissao($id)
@@ -36,13 +35,13 @@ class SecretController extends Controller
                 ->where('id', $id)
                 ->update(['comissao' => !$professor->comissao]);
         }
-
-        return redirect()->back()->with('success', 'comissão atualizado');
+        return redirect()->back()->with('success', 'Status de comissão atualizado');
     }
-
 
     public function dbEditor()
     {
+        session()->put('sessao', 'admin');
+
         $tables = [];
         foreach ($this->allowedTables as $table) {
             $count = DB::table($table)->count();
@@ -52,7 +51,7 @@ class SecretController extends Controller
             ];
         }
 
-        return view('secret.db-editor', compact('tables'));
+        return view('admin.db-editor', compact('tables'));
     }
 
     public function showTable($table)
@@ -64,7 +63,7 @@ class SecretController extends Controller
         $columns = Schema::getColumnListing($table);
         $data = DB::table($table)->paginate(20);
 
-        return view('secret.table-view', compact('table', 'columns', 'data'));
+        return view('admin.table-view', compact('table', 'columns', 'data'));
     }
 
     public function createRecord($table)
@@ -78,7 +77,7 @@ class SecretController extends Controller
             return !in_array($col, ['id', 'created_at', 'updated_at']);
         });
 
-        return view('secret.table-create', compact('table', 'columns'));
+        return view('admin.table-create', compact('table', 'columns'));
     }
 
     public function storeRecord(Request $request, $table)
@@ -93,7 +92,7 @@ class SecretController extends Controller
 
         try {
             DB::table($table)->insert($data);
-            return redirect()->route('secret.table', $table)->with('success', 'Registro criado com sucesso');
+            return redirect()->route('admin.table', $table)->with('success', 'Registro criado com sucesso');
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'Erro ao criar registro: ' . $e->getMessage());
         }
@@ -109,14 +108,14 @@ class SecretController extends Controller
         $record = DB::table($table)->where('id', $id)->first();
 
         if (!$record) {
-            return redirect()->route('secret.table', $table)->with('error', 'Registro não encontrado');
+            return redirect()->route('admin.table', $table)->with('error', 'Registro não encontrado');
         }
 
         $editableColumns = array_filter($columns, function ($col) {
             return !in_array($col, ['id', 'created_at', 'updated_at']);
         });
 
-        return view('secret.table-edit', compact('table', 'record', 'editableColumns'));
+        return view('admin.table-edit', compact('table', 'record', 'editableColumns'));
     }
 
     public function updateRecord(Request $request, $table, $id)
@@ -130,7 +129,7 @@ class SecretController extends Controller
 
         try {
             DB::table($table)->where('id', $id)->update($data);
-            return redirect()->route('secret.table', $table)->with('success', 'Registro atualizado com sucesso');
+            return redirect()->route('admin.table', $table)->with('success', 'Registro atualizado com sucesso');
         } catch (\Exception $e) {
             return back()->withInput()->with('error', 'Erro ao atualizar registro: ' . $e->getMessage());
         }
@@ -144,7 +143,7 @@ class SecretController extends Controller
 
         try {
             DB::table($table)->where('id', $id)->delete();
-            return redirect()->route('secret.table', $table)->with('success', 'Registro excluído com sucesso');
+            return redirect()->route('admin.table', $table)->with('success', 'Registro excluído com sucesso');
         } catch (\Exception $e) {
             return back()->with('error', 'Erro ao excluir registro: ' . $e->getMessage());
         }
@@ -152,8 +151,9 @@ class SecretController extends Controller
 
     public function sqlExecutor()
     {
-        return view('secret.sql-executor');
+        return view('admin.sql-executor');
     }
+
     public function executeSql(Request $request)
     {
         $sql = $request->input('sql');
@@ -170,7 +170,7 @@ class SecretController extends Controller
             $error = $e->getMessage();
         }
 
-        return view('secret.sql-executor', compact('sql', 'results', 'error'));
+        return view('admin.sql-executor', compact('sql', 'results', 'error'));
     }
 
     public function exportAllTables()
@@ -220,7 +220,7 @@ class SecretController extends Controller
 
         $fullSql = implode("\n", $sqlStatements);
 
-        return view('secret.sql-executor', [
+        return view('admin.sql-executor', [
             'sql' => $fullSql,
             'results' => null,
             'error' => null,

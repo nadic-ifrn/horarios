@@ -13,8 +13,11 @@
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-md-6">
-                        <a href="{{ route('secret.sql-executor') }}" class="btn btn-info">
+                        <a href="{{ route('admin.sql-executor') }}" class="btn btn-info">
                             <i class="nc-icon nc-settings"></i> Executor SQL
+                        </a>
+                        <a href="{{ route('admin.usuarios') }}" class="btn btn-warning ml-2">
+                            <i class="nc-icon nc-single-02"></i> Gestão de Usuários
                         </a>
                     </div>
                 </div>
@@ -35,10 +38,10 @@
                                 <td><strong>{{ $table['name'] }}</strong></td>
                                 <td>{{ $table['count'] }} registros</td>
                                 <td>
-                                    <a href="{{ route('secret.table', $table['name']) }}" class="btn btn-sm btn-primary">
+                                    <a href="{{ route('admin.table', $table['name']) }}" class="btn btn-sm btn-primary">
                                         <i class="nc-icon nc-zoom-split"></i> Ver
                                     </a>
-                                    <a href="{{ route('secret.create', $table['name']) }}" class="btn btn-sm btn-success">
+                                    <a href="{{ route('admin.create', $table['name']) }}" class="btn btn-sm btn-success">
                                         <i class="nc-icon nc-simple-add"></i> Novo
                                     </a>
                                 </td>

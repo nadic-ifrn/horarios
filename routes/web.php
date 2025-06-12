@@ -62,19 +62,20 @@ Route::group(['middleware' => 'usuario:comum'], function() {
 	});
 });
 
-Route::get('/kellyson/admin/profs', 'SecretController@index');
-Route::patch('/kellyson/admin/profs/toggle/{id}', 'SecretController@toggleComissao')->name('secret.toggle-comissao');
+Route::group(['middleware' => 'usuario:comissao'], function () {
+	// Gerenciamento de usuários
+	Route::get('/admin/usuarios', 'AdminController@usuarios')->name('admin.usuarios');
+	Route::patch('/admin/usuarios/toggle/{id}', 'AdminController@toggleComissao')->name('admin.toggle-comissao');
 
-// editor do db
-Route::prefix('kellyson/admin')->group(function () {
-	Route::get('/db-editor', 'SecretController@dbEditor')->name('secret.db-editor');
-	Route::get('/db-editor/{table}', 'SecretController@showTable')->name('secret.table');
-	Route::get('/db-editor/{table}/create', 'SecretController@createRecord')->name('secret.create');
-	Route::post('/db-editor/{table}', 'SecretController@storeRecord')->name('secret.store');
-	Route::get('/db-editor/{table}/{id}/edit', 'SecretController@editRecord')->name('secret.edit');
-	Route::put('/db-editor/{table}/{id}', 'SecretController@updateRecord')->name('secret.update');
-	Route::delete('/db-editor/{table}/{id}', 'SecretController@destroyRecord')->name('secret.destroy');
-	Route::get('/sql-executor', 'SecretController@sqlExecutor')->name('secret.sql-executor');
-	Route::post('/sql-executor', 'SecretController@executeSql')->name('secret.sql-execute');
-	Route::get('/sql-export-all', 'SecretController@exportAllTables')->name('secret.sql-export-all');
+	// Editor do banco de dados
+	Route::get('/admin/db-editor', 'AdminController@dbEditor')->name('admin.db-editor');
+	Route::get('/admin/db-editor/{table}', 'AdminController@showTable')->name('admin.table');
+	Route::get('/admin/db-editor/{table}/create', 'AdminController@createRecord')->name('admin.create');
+	Route::post('/admin/db-editor/{table}', 'AdminController@storeRecord')->name('admin.store');
+	Route::get('/admin/db-editor/{table}/{id}/edit', 'AdminController@editRecord')->name('admin.edit');
+	Route::put('/admin/db-editor/{table}/{id}', 'AdminController@updateRecord')->name('admin.update');
+	Route::delete('/admin/db-editor/{table}/{id}', 'AdminController@destroyRecord')->name('admin.destroy');
+	Route::get('/admin/sql-executor', 'AdminController@sqlExecutor')->name('admin.sql-executor');
+	Route::post('/admin/sql-executor', 'AdminController@executeSql')->name('admin.sql-execute');
+	Route::get('/admin/sql-export-all', 'AdminController@exportAllTables')->name('admin.sql-export-all');
 });

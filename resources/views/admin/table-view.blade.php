@@ -10,10 +10,10 @@
             <div class="card-header">
                 <h4 class="card-title">Tabela: {{ $table }}</h4>
                 <div class="pull-right">
-                    <a href="{{ route('secret.db-editor') }}" class="btn btn-sm btn-secondary">
+                    <a href="{{ route('admin.db-editor') }}" class="btn btn-sm btn-secondary">
                         <i class="nc-icon nc-minimal-left"></i> Voltar
                     </a>
-                    <a href="{{ route('secret.create', $table) }}" class="btn btn-sm btn-success">
+                    <a href="{{ route('admin.create', $table) }}" class="btn btn-sm btn-success">
                         <i class="nc-icon nc-simple-add"></i> Novo Registro
                     </a>
                 </div>
@@ -36,17 +36,17 @@
                                 @foreach($columns as $column)
                                 <td>
                                     @if(is_bool($record->$column))
-                                        {{ $record->$column ? 'Sim' : 'Não' }}
+                                    {{ $record->$column ? 'Sim' : 'Não' }}
                                     @else
-                                        {{ $record->$column }}
+                                    {{ $record->$column }}
                                     @endif
                                 </td>
                                 @endforeach
                                 <td>
-                                    <a href="{{ route('secret.edit', [$table, $record->id]) }}" class="btn btn-sm btn-warning">
+                                    <a href="{{ route('admin.edit', [$table, $record->id]) }}" class="btn btn-sm btn-warning">
                                         <i class="nc-icon nc-ruler-pencil"></i> Editar
                                     </a>
-                                    <form action="{{ route('secret.destroy', [$table, $record->id]) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Tem certeza que deseja excluir este registro?')">
+                                    <form action="{{ route('admin.destroy', [$table, $record->id]) }}" method="POST" style="display: inline-block;" onsubmit="return confirm('Tem certeza que deseja excluir este registro?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-danger">
@@ -66,11 +66,10 @@
                         {{ $data->links() }}
                     </div>
                 </div>
-                @else
-                <div class="alert alert-info">
+                @else <div class="alert alert-info">
                     <strong>Nenhum registro encontrado nesta tabela.</strong>
                     <br>
-                    <a href="{{ route('secret.create', $table) }}" class="btn btn-sm btn-success mt-2">
+                    <a href="{{ route('admin.create', $table) }}" class="btn btn-sm btn-success mt-2">
                         <i class="nc-icon nc-simple-add"></i> Criar primeiro registro
                     </a>
                 </div>

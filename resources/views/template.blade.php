@@ -61,6 +61,12 @@
 							<p>Relatórios</p>
 						</a>
 					</li>
+					<li class="{{ (session()->get('sessao') == 'admin') ? 'active' : '' }}">
+						<a href="{{ route('admin.db-editor') }}">
+							<i class="nc-icon nc-settings-gear-65"></i>
+							<p>Administração</p>
+						</a>
+					</li>
 					@endif
 					<li>
 						<a href="{{ action('UsuarioController@sair') }}">

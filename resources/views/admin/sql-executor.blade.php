@@ -10,22 +10,20 @@
             <div class="card-header">
                 <h4 class="card-title">Executor SQL</h4>
                 <div class="pull-right">
-                    <a href="{{ route('secret.db-editor') }}" class="btn btn-sm btn-secondary">
+                    <a href="{{ route('admin.db-editor') }}" class="btn btn-sm btn-secondary">
                         <i class="nc-icon nc-minimal-left"></i> Voltar ao Editor
                     </a>
                 </div>
             </div>
             <div class="card-body">
-                <small class="text-muted">⚠️ Consultas SQL executadas diretamente no banco de dados</small>
-
-                @if(isset($exported) && $exported)
+                <small class="text-muted">⚠️ Consultas SQL executadas diretamente no banco de dados</small> @if(isset($exported) && $exported)
                 <div class="alert alert-success">
                     <h5>Export realizado com sucesso!</h5>
                     <p>O SQL de todas as tabelas foi gerado no campo abaixo. Você pode copiar e usar para clonar o banco de dados.</p>
                 </div>
                 @endif
 
-                <form action="{{ route('secret.sql-execute') }}" method="POST">
+                <form action="{{ route('admin.sql-execute') }}" method="POST">
                     @csrf
                     <div class="form-group">
                         <label for="sql">Consulta SQL:</label>
@@ -34,11 +32,10 @@
                     <div class="form-group">
                         <button type="submit" class="btn btn-primary">
                             <i class="nc-icon nc-send"></i> Executar
-                        </button>
-                        <button type="button" class="btn btn-secondary" onclick="document.getElementById('sql').value = ''">
+                        </button> <button type="button" class="btn btn-secondary" onclick="document.getElementById('sql').value = ''">
                             <i class="nc-icon nc-simple-remove"></i> Limpar
                         </button>
-                        <a href="{{ route('secret.sql-export-all') }}" class="btn btn-success">
+                        <a href="{{ route('admin.sql-export-all') }}" class="btn btn-success">
                             <i class="nc-icon nc-cloud-download-93"></i> Exportar Todas as Tabelas
                         </a>
                         @if(isset($exported) && $exported)

@@ -56,16 +56,14 @@ class QuestionarioController extends Controller
 				]);
 			}
 			$dia->save();
-
-			// Persistência do registro do anexo caso a opção seja Regime Diferenciado
 			$anexo = Anexo::where('dia_id', $dia->id)->first();
 			if ($anexo != null) {
 				Storage::delete($anexo->local);
 				$anexo->delete();
 			}
-			if ($dados['q1'] == 3) {
-				$local = Storage::putFile('public', $dados['q1_2'], 'public');
-				$anexo = new Anexo(['local' => $local, 'comentario' => $dados['q1_2_comentario']]);
+			if ($request->hasFile('q4')) {
+				$local = Storage::putFile('public', $request->file('q4'), 'public');
+				$anexo = new Anexo(['local' => $local, 'comentario' => $dados['q4_comentario'] ?? '']);
 				$dia->anexo()->save($anexo);
 			}
 
