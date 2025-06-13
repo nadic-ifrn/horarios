@@ -98,9 +98,9 @@
 			<div class="row">
 				<div class="col-6">
 					<div class="form-group">
-						<label for="q2_turma">Pesquisar por turma</label>
-						<select class="form-control" id="q2_turma">
-							<option value=""></option>
+						<label for="q2_turma">Selecione primeiro a turma <sup class="required">*</sup></label>
+						<select class="form-control" id="q2_turma" required>
+							<option value="">Selecione uma turma...</option>
 							@foreach($ano->turmas()->join('periodos', 'periodos.id', '=', 'turmas.periodo_id')->join('cursos', 'cursos.id', '=', 'periodos.curso_id')->orderBy('cursos.nome')->get(['turmas.*']) as $turma)
 							<option value="{{ $turma->id }}">{{ $turma->periodo->curso->nome }} ({{ $turma->periodo->curso->sigla }}.{{ substr($turma->periodo->nome, 0, 1) }}{{ $turma->turno }})</option>
 							@endforeach
@@ -109,16 +109,15 @@
 				</div>
 				<div class="col-6">
 					<div class="form-group">
-						<label for="q2_disciplina">Escolha da disciplina</label>
-						<select class="form-control" id="q2_disciplina">
-							<option value=""></option>
-							<optgroup></optgroup>
+						<label for="q2_disciplina">Depois escolha a disciplina <sup class="required">*</sup></label>
+						<select class="form-control" id="q2_disciplina" disabled>
+							<option value="">Primeiro selecione uma turma</option>
 						</select>
 					</div>
 				</div>
 			</div>
 			<div class="text-right">
-				<button type="button" id="q2_add" class="btn btn-success">
+				<button type="button" id="q2_add" class="btn btn-success" disabled>
 					<span class="nc-icon nc-simple-add"></span> Adicionar
 				</button>
 			</div>
@@ -131,7 +130,7 @@
 			<h5 style="padding-bottom: 10px; padding-top: 20px">4. Restrição no horário</h5>
 			<p style="margin-bottom: 15px;">Para o caso de restrições de determinados dias da semana e horários por necessidade comprovada, envie aqui o comprovante.</p>
 			<div style="margin-bottom: 15px; padding: 15px; background-color: #e7f3ff; border-left: 3px solid #007bff; border-radius: 5px;">
-				<h6 style="color: #0056b3; margin-bottom: 10px;"><b>Observação:</b></h6>
+				<h6 style="color: #0056b3; margin-bottom: 10px;"><b>informação:</b></h6>
 				<p style="margin-bottom: 0; color: #0056b3;">Caso tenha necessidade de enviar mais de um documento é necessário que este seja compilado em um único PDF.</p>
 			</div>
 			<div class="custom-file">
@@ -139,7 +138,7 @@
 				<label class="custom-file-label" for="q4">Escolha o arquivo</label>
 			</div>
 			<div class="form-group" style="margin-top: 10px">
-				<label for="q4_comentario">Descrição do arquivo de autorização</label>
+				<label for="q4_comentario">Descrição do arquivo</label>
 				<input type="text" class="form-control" name="q4_comentario" maxlength="200" id="q4_comentario">
 			</div>
 			<div class="text-right">
