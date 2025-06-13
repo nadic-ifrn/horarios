@@ -68,7 +68,6 @@
 					</ul>
 				</div>
 			</details>
-
 			<hr />
 			<small class="required">* Campos obrigatórios.</small>
 			<h5 style="padding-bottom: 10px; padding-top: 20px">1. Escolha dos dias da semana <sup class="required">*</sup></h5>
@@ -89,65 +88,11 @@
 					</div>
 					<label for="q1_qua_sex" class="form-control" aria-label="Text input with radio button">Quarta-feira / Quinta-feira / Sexta-feira</label>
 				</div>
-				<div class="input-group form-group">
-					<div class="input-group-prepend">
-						<div class="input-group-text">
-							<input type="radio" name="q1" id="q1_reg_diferenciado" aria-label="Radio button for following text input" value="3" required="required">
-						</div>
-					</div>
-					<label for="q1_reg_diferenciado" class="form-control" aria-label="Text input with radio button">Regime Diferenciado</label>
-				</div>
 			</fieldset>
-			<div id="q1_regime_diferenciado" style="display: none">
-				<h5 style="padding-bottom: 10px; padding-top: 20px">1.1. Escolha dos dias da semana <sup class="required">*</sup></h5>
-				<fieldset>
-					<div class="row">
-						<div class="col-6">
-							<div class="input-group form-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">
-										<input type="checkbox" name="q1_1[]" id="q1_1_seg" aria-label="Radio button for following text input" value="seg">
-									</div>
-								</div>
-								<label for="q1_1_seg" class="form-control" aria-label="Text input with radio button">Segunda-feira</label>
-							</div>
-							<div class="input-group form-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">
-										<input type="checkbox" name="q1_1[]" id="q1_2_ter" aria-label="Radio button for following text input" value="ter">
-									</div>
-								</div>
-								<label for="q1_2_ter" class="form-control" aria-label="Text input with radio button">Terça-feira</label>
-							</div>
-							<div class="input-group form-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">
-										<input type="checkbox" name="q1_1[]" id="q1_3_qua" aria-label="Radio button for following text input" value="qua">
-									</div>
-								</div>
-								<label for="q1_3_qua" class="form-control" aria-label="Text input with radio button">Quarta-feira</label>
-							</div>
-						</div>
-						<div class="col-6">
-							<div class="input-group form-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">
-										<input type="checkbox" name="q1_1[]" id="q1_4_qui" aria-label="Radio button for following text input" value="qui">
-									</div>
-								</div>
-								<label for="q1_4_qui" class="form-control" aria-label="Text input with radio button">Quinta-feira</label>
-							</div>
-							<div class="input-group form-group">
-								<div class="input-group-prepend">
-									<div class="input-group-text">
-										<input type="checkbox" name="q1_1[]" id="q1_5_sex" aria-label="Radio button for following text input" value="sex">
-									</div>
-								</div>
-								<label for="q1_5_sex" class="form-control" aria-label="Text input with radio button">Sexta-feira</label>
-							</div>
-						</div>
-					</div>
-				</fieldset>
+
+			<div style="margin: 15px 0; padding: 15px; background-color: #e3f2fd; border-left: 3px solid #2196f3; border-radius: 5px;">
+				<h6 style="color: #1565c0; margin-bottom: 10px;"><b><i class="nc-icon nc-alert-circle-i" style="margin-right: 5px;"></i>Informação</b></h6>
+				<p style="color: #1565c0; margin-bottom: 0;">Caso deseje indicar um quarto dia na semana, informe nas observações.</p>
 			</div>
 			<h5 style="padding-bottom: 10px; padding-top: 20px">2. Seleção das disciplinas <sup class="required">*</sup></h5>
 			<div class="row">
