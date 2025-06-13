@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('titulo', 'Editor de db')
+@section('titulo', 'Módulo administrativo')
 
 @section('conteudo')
 
@@ -8,9 +8,18 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Editor de db</h4>
+                <h4 class="card-title">Módulo administrativo</h4>
             </div>
             <div class="card-body">
+                <div style="margin-bottom: 20px; padding: 15px; background-color: #fff3cd; border-left: 3px solid #ffc107; border-radius: 5px;">
+                    <h6 style="color: #856404; margin-bottom: 8px; font-weight: bold;">
+                        <i class="nc-icon nc-alert-circle-i" style="margin-right: 5px;"></i>
+                        Atenção
+                    </h6>
+                    <p style="margin-bottom: 0; color: #856404;">
+                        Este é um módulo administrativo restrito. Use com cuidado.
+                    </p>
+                </div>
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <a href="{{ route('admin.sql-executor') }}" class="btn btn-info">

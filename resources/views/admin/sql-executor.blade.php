@@ -16,7 +16,17 @@
                 </div>
             </div>
             <div class="card-body">
-                <small class="text-muted">⚠️ Consultas SQL executadas diretamente no banco de dados</small> @if(isset($exported) && $exported)
+                <div style="margin-bottom: 20px; padding: 15px; background-color: #fff3cd; border-left: 3px solid #ffc107; border-radius: 5px;">
+                    <h6 style="color: #856404; margin-bottom: 8px; font-weight: bold;">
+                        <i class="nc-icon nc-alert-circle-i" style="margin-right: 5px;"></i>
+                        Atenção
+                    </h6>
+                    <p style="margin-bottom: 0; color: #856404;">
+                        Você está executando comandos SQL diretamente no banco de dados. Tenha muito cuidado com comandos UPDATE, DELETE e DROP.
+                    </p>
+                </div>
+
+                @if(isset($exported) && $exported)
                 <div class="alert alert-success">
                     <h5>Export realizado com sucesso!</h5>
                     <p>O SQL de todas as tabelas foi gerado no campo abaixo. Você pode copiar e usar para clonar o banco de dados.</p>
