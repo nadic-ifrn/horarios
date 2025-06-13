@@ -25,15 +25,17 @@ class AdminController extends Controller
         $professores = DB::table('professors')->get();
         return view('admin.usuarios', compact('professores'));
     }
-
-    public function toggleComissao($id)
+    public function toggleComissao(Request $request, $id)
     {
         $professor = DB::table('professors')->where('id', $id)->first();
 
         if ($professor) {
+            // Se veio um status específico da requisição, usa ele; senão faz toggle
+            $novoStatus = $request->has('status') ? (bool)$request->status : !$professor->comissao;
+
             DB::table('professors')
                 ->where('id', $id)
-                ->update(['comissao' => !$professor->comissao]);
+                ->update(['comissao' => $novoStatus]);
         }
         return redirect()->back()->with('success', 'Status de comissão atualizado');
     }
@@ -226,5 +228,24 @@ class AdminController extends Controller
             'error' => null,
             'exported' => true
         ]);
+    }
+
+    public function destroyUser($id)
+    {
+        $professor = DB::table('professors')->where('id', $id)->first();
+
+        if ($professor) {
+            // Verificar se existem registros relacionados antes de deletar
+            $temDias = DB::table('dias')->where('professor_id', $id)->exists();
+
+            if ($temDias) {
+                return redirect()->back()->with('error', 'Não é possível remover este usuário pois ele possui registros de questionários associados.');
+            }
+
+            DB::table('professors')->where('id', $id)->delete();
+            return redirect()->back()->with('success', 'Usuário removido com sucesso');
+        }
+
+        return redirect()->back()->with('error', 'Usuário não encontrado');
     }
 }

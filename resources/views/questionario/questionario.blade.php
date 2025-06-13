@@ -183,10 +183,10 @@
 			<div class="form-group">
 				<textarea class="form-control" name="q3" id="q3"></textarea>
 			</div>
-			<h5 style="padding-bottom: 10px; padding-top: 20px">4. Autorização da DIAC (portaria de afastamento parcial ou outros, em formato PDF)</h5>
+			<h5 style="padding-bottom: 10px; padding-top: 20px">4. Restrição no horário</h5>
+			<p style="margin-bottom: 15px;">Para o caso de restrições de determinados dias da semana e horários por necessidade comprovada, envie aqui o comprovante.</p>
 			<div style="margin-bottom: 15px; padding: 15px; background-color: #e7f3ff; border-left: 3px solid #007bff; border-radius: 5px;">
 				<h6 style="color: #0056b3; margin-bottom: 10px;"><b>Observação:</b></h6>
-				<p style="margin-bottom: 10px; color: #0056b3;">Tenho restrições de determinados dias da semana e horários por necessidade comprovada.</p>
 				<p style="margin-bottom: 0; color: #0056b3;">Caso tenha necessidade de enviar mais de um documento é necessário que este seja compilado em um único PDF.</p>
 			</div>
 			<div class="custom-file">

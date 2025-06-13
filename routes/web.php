@@ -62,10 +62,10 @@ Route::group(['middleware' => 'usuario:comum'], function() {
 	});
 });
 
-Route::group(['middleware' => 'usuario:comissao'], function () {
-	// Gerenciamento de usuários
+Route::group(['middleware' => 'usuario:comissao'], function () {	// Gerenciamento de usuários
 	Route::get('/admin/usuarios', 'AdminController@usuarios')->name('admin.usuarios');
 	Route::patch('/admin/usuarios/toggle/{id}', 'AdminController@toggleComissao')->name('admin.toggle-comissao');
+	Route::delete('/admin/usuarios/{id}', 'AdminController@destroyUser')->name('admin.destroy-user');
 
 	// Editor do banco de dados
 	Route::get('/admin/db-editor', 'AdminController@dbEditor')->name('admin.db-editor');
