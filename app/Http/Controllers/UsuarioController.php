@@ -13,22 +13,18 @@ class UsuarioController extends Controller
 	public function autenticar(Request $request)
 	{
 		$suap = new SUAPClient();
-
 		try {
-			$usuario = Professor::where('matricula', $request->matricula)->first();
-			if ($usuario == null) {
-				session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Usuário não autorizado a acessar o sistema.']);
-				return redirect('/');
-			}
-
 			$token = $suap->autenticar($request->matricula, $request->senha);
 			$dados = $suap->getMeusDados();
 			if ($dados['vinculo']['campus'] == Config::get('app.campus')) {
-				if ($usuario->nome !== $dados['nome_usual']) {
-					$usuario->nome = $dados['nome_usual'];
-					$usuario->save();
+				$usuario = $this->createOrUpdateProfessor($dados);
+
+				if ($usuario != null) {
+					session()->put('usuario', $usuario);
+				} else {
+					session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Usuário não autorizado a acessar o sistema.']);
+					return redirect('/');
 				}
-				session()->put('usuario', $usuario);
 			} else {
 				session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Você não pertence ao campus ' . Config::get('app.campus') . '.']);
 			}
@@ -42,30 +38,24 @@ class UsuarioController extends Controller
 		session()->forget('usuario');
 		return redirect('/');
 	}
-
 	public function entrar(Request $request)
 	{
 		$matricula = $request->input('matricula');
 		$senha = $request->input('senha');
-
 		try {
-			$usuario = Professor::where('matricula', $matricula)->first();
-			if ($usuario == null) {
-				return response()->json(['erro' => 'Usuário não autorizado a acessar o sistema.'], 403);
-			}
-
 			$suap = new SUAPClient();
 			$resultado = $suap->autenticar($matricula, $senha);
-
 			if ($resultado) {
 				$dados = $suap->getMeusDados();
 				$campusConfig = Config::get('app.campus');
 				if ($dados['vinculo']['campus'] == $campusConfig) {
-					if ($usuario->nome !== $dados['nome_usual']) {
-						$usuario->nome = $dados['nome_usual'];
-						$usuario->save();
+					$usuario = $this->createOrUpdateProfessor($dados);
+					if ($usuario != null) {
+						session()->put('usuario', $usuario);
+						return response()->json(['sucesso' => true, 'usuario' => $usuario], 200);
+					} else {
+						return response()->json(['erro' => 'Usuário não autorizado a acessar o sistema.'], 403);
 					}
-					session()->put('usuario', $usuario);
 				} else {
 					return response()->json(['erro' => 'Você não pertence ao campus ' . $campusConfig . '.'], 422);
 				}
@@ -74,6 +64,37 @@ class UsuarioController extends Controller
 			}
 		} catch (Exception $e) {
 			return response()->json(['erro' => 'Erro interno do servidor.'], 500);
+		}
+	}
+
+	private function createOrUpdateProfessor($dados)
+	{
+		$usuario = Professor::where('matricula', $dados['matricula'])->first();
+		if (isset($dados['vinculo']['categoria']) && $dados['vinculo']['categoria'] == 'docente') {
+			if ($usuario == null) {
+				$usuario = new Professor([
+					'nome' => $dados['nome_usual'],
+					'matricula' => $dados['matricula'],
+					'comissao' => 0
+				]);
+				$usuario->save();
+			} else {
+				if ($usuario->nome !== $dados['nome_usual']) {
+					$usuario->nome = $dados['nome_usual'];
+					$usuario->save();
+				}
+			}
+			return $usuario;
+		} else {
+			if ($usuario != null) {
+				if ($usuario->nome !== $dados['nome_usual']) {
+					$usuario->nome = $dados['nome_usual'];
+					$usuario->save();
+				}
+				return $usuario;
+			} else {
+				return null;
+			}
 		}
 	}
 }

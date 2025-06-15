@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', 'HomeController@main');
 
 Route::group(['middleware' => 'visitante'], function() {
-	Route::post('/autenticar', 'UsuarioController@autenticar');	
+	Route::post('/autenticar', 'UsuarioController@autenticar');
 });
 
 Route::group(['middleware' => 'usuario:comum'], function() {
