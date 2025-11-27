@@ -24,7 +24,7 @@ jobs:
 
       - name: Build da imagem
         run: |
-          docker build -t ghcr.io/${{ github.repository }}:latest .
+          docker build --no-cache -t ghcr.io/${{ github.repository }}:latest .
 
       - name: Push da imagem
         run: |
@@ -48,5 +48,6 @@ jobs:
             cd /home/${{ secrets.SSH_USER }}/app;
             docker compose pull;
             docker compose stop app;
+            docker compose run --rm app php artisan optimize:clear;
             docker compose run --rm app php artisan migrate;
             docker compose up -d --remove-orphans

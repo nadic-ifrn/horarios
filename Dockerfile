@@ -42,5 +42,14 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Cria script de entrypoint
+RUN echo '#!/bin/bash\n\
+    set -e\n\
+    echo "Limpando cache do Laravel..."\n\
+    php artisan optimize:clear || true\n\
+    echo "Cache limpo! Iniciando Apache..."\n\
+    exec apache2-foreground' > /usr/local/bin/docker-entrypoint.sh \
+    && chmod +x /usr/local/bin/docker-entrypoint.sh
+
 # Comando padrão
-CMD ["apache2-foreground"]
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
