@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\QuestionarioController;
@@ -24,6 +25,39 @@ use App\Http\Controllers\AdminController;
 */
 
 Route::get('/', [HomeController::class, 'main']);
+
+// Rota especial para limpar cache (usar uma vez após deploy)
+Route::get('/clear-cache-emergency', function() {
+    try {
+        // Limpar cache de configuração
+        Artisan::call('config:clear');
+        $output[] = 'Config cache cleared';
+        
+        // Limpar cache de rotas
+        Artisan::call('route:clear');
+        $output[] = 'Route cache cleared';
+        
+        // Limpar cache de views
+        Artisan::call('view:clear');
+        $output[] = 'View cache cleared';
+        
+        // Limpar cache geral
+        Artisan::call('cache:clear');
+        $output[] = 'Application cache cleared';
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Cache limpo com sucesso!',
+            'details' => $output ?? []
+        ]);
+    } catch (\Exception $e) {
+        return response()->json([
+            'success' => false,
+            'message' => 'Erro ao limpar cache',
+            'error' => $e->getMessage()
+        ], 500);
+    }
+});
 
 Route::group(['middleware' => 'visitante'], function() {
 	Route::post('/autenticar', [UsuarioController::class, 'autenticar']);
