@@ -1,5 +1,5 @@
 # Base PHP com extensões necessárias
-FROM php:7.4-apache
+FROM php:8.4-apache
 
 ARG RUNTIME_DEPS="mariadb-client git unzip curl libzip-dev libpng-dev libonig-dev libxml2-dev zip"
 ENV APACHE_DOCUMENT_ROOT="/var/www/html/public"
