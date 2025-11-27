@@ -35,6 +35,9 @@ RUN sed -ri \
 # Copia o restante da aplicação
 COPY . .
 
+# Remove cache PHP antigo ANTES de qualquer comando artisan
+RUN rm -rf bootstrap/cache/*.php
+
 # Executa o Composer
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 RUN ls -la
@@ -45,11 +48,15 @@ RUN chown -R www-data:www-data /var/www/html \
 # Cria script de entrypoint
 RUN echo '#!/bin/bash\n\
     set -e\n\
+    echo "Removendo cache PHP antigo..."\n\
+    rm -rf bootstrap/cache/*.php\n\
     echo "Limpando cache do Laravel..."\n\
     php artisan optimize:clear || true\n\
-    echo "Cache limpo! Iniciando Apache..."\n\
-    exec apache2-foreground' > /usr/local/bin/docker-entrypoint.sh \
+    echo "Cache limpo!"\n\
+    echo "Executando: $@"\n\
+    exec "$@"' > /usr/local/bin/docker-entrypoint.sh \
     && chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Comando padrão
+# Comando padrão (pode ser sobrescrito)
 ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
+CMD ["apache2-foreground"]

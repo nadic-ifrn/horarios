@@ -1,6 +1,8 @@
 services:
   app:
     build: .
+    entrypoint: [ "/usr/local/bin/docker-entrypoint.sh" ]
+    command: [ "apache2-foreground" ]
     ports:
       - "8000:80"
     volumes:
