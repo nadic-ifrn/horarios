@@ -25,7 +25,7 @@ use App\Http\Controllers\AdminController;
 
 Route::get('/', [HomeController::class, 'main'])->name('home');
 
-Route::group(['middleware' => 'visitante'], function() {
+Route::middleware(['visitante'])->group(function() {
 	Route::post('/autenticar', [UsuarioController::class, 'autenticar'])->name('autenticar');
 	Route::get('/autenticar', function() {
 		return redirect()->route('home');
