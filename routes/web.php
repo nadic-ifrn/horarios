@@ -23,52 +23,52 @@ use App\Http\Controllers\AdminController;
 |
 */
 
-Route::get('/', [HomeController::class, 'main']);
+Route::get('/', [HomeController::class, 'main'])->name('home');
 
 Route::group(['middleware' => 'visitante'], function() {
-	Route::post('/autenticar', [UsuarioController::class, 'autenticar']);
+	Route::post('/autenticar', [UsuarioController::class, 'autenticar'])->name('autenticar');
 });
 
 Route::group(['middleware' => 'usuario:comum'], function() {
-	Route::get('/logout', [UsuarioController::class, 'sair']);
+	Route::get('/logout', [UsuarioController::class, 'sair'])->name('logout');
 	
-	Route::get('/questionario/responder/{id}', [QuestionarioController::class, 'responder']);
-	Route::post('/questionario/submeter', [QuestionarioController::class, 'submeter']);
-	Route::get('/questionario/listar/{idAnoLetivo}', [QuestionarioController::class, 'listar']);
-	Route::get('/questionario/detalhar/{id}', [QuestionarioController::class, 'detalhar']);
-	Route::get('/questionario/anexo/{id}', [AnexoController::class, 'visualizar']);
+	Route::get('/questionario/responder/{id}', [QuestionarioController::class, 'responder'])->name('questionario.responder');
+	Route::post('/questionario/submeter', [QuestionarioController::class, 'submeter'])->name('questionario.submeter');
+	Route::get('/questionario/listar/{idAnoLetivo}', [QuestionarioController::class, 'listar'])->name('questionario.listar');
+	Route::get('/questionario/detalhar/{id}', [QuestionarioController::class, 'detalhar'])->name('questionario.detalhar');
+	Route::get('/questionario/anexo/{id}', [AnexoController::class, 'visualizar'])->name('anexo.visualizar');
 
-	Route::get('/disciplinas/listar/turma/{turma_id}', [DisciplinaController::class, 'listar_json']);
+	Route::get('/disciplinas/listar/turma/{turma_id}', [DisciplinaController::class, 'listar_json'])->name('disciplina.listar_json');
 
 	Route::group(['middleware' => 'usuario:comissao'], function() {
-		Route::get('/curso/listar', [CursoController::class, 'listar']);
-		Route::get('/curso/excluir/{id}', [CursoController::class, 'excluir']);
-		Route::get('/curso/editar/{id?}', [CursoController::class, 'editar']);
-		Route::post('/curso/salvar', [CursoController::class, 'salvar']);
+		Route::get('/curso/listar', [CursoController::class, 'listar'])->name('curso.listar');
+		Route::get('/curso/excluir/{id}', [CursoController::class, 'excluir'])->name('curso.excluir');
+		Route::get('/curso/editar/{id?}', [CursoController::class, 'editar'])->name('curso.editar');
+		Route::post('/curso/salvar', [CursoController::class, 'salvar'])->name('curso.salvar');
 
-		Route::get('/periodo/listar/{curso_id}', [PeriodoController::class, 'listar']);
-		Route::get('/periodo/excluir/{id}', [PeriodoController::class, 'excluir']);
-		Route::get('/periodo/editar/{curso_id}/{id?}', [PeriodoController::class, 'editar']);
-		Route::post('/periodo/salvar', [PeriodoController::class, 'salvar']);
+		Route::get('/periodo/listar/{curso_id}', [PeriodoController::class, 'listar'])->name('periodo.listar');
+		Route::get('/periodo/excluir/{id}', [PeriodoController::class, 'excluir'])->name('periodo.excluir');
+		Route::get('/periodo/editar/{curso_id}/{id?}', [PeriodoController::class, 'editar'])->name('periodo.editar');
+		Route::post('/periodo/salvar', [PeriodoController::class, 'salvar'])->name('periodo.salvar');
 
-		Route::get('/disciplina/listar/{periodo_id}', [DisciplinaController::class, 'listar']);
-		Route::get('/disciplina/excluir/{id}', [DisciplinaController::class, 'excluir']);
-		Route::get('/disciplina/editar/{periodo_id}/{id?}', [DisciplinaController::class, 'editar']);
-		Route::post('/disciplina/salvar', [DisciplinaController::class, 'salvar']);
+		Route::get('/disciplina/listar/{periodo_id}', [DisciplinaController::class, 'listar'])->name('disciplina.listar');
+		Route::get('/disciplina/excluir/{id}', [DisciplinaController::class, 'excluir'])->name('disciplina.excluir');
+		Route::get('/disciplina/editar/{periodo_id}/{id?}', [DisciplinaController::class, 'editar'])->name('disciplina.editar');
+		Route::post('/disciplina/salvar', [DisciplinaController::class, 'salvar'])->name('disciplina.salvar');
 
-		Route::get('/ano_letivo/listar', [AnoLetivoController::class, 'listar']);
-		Route::get('/ano_letivo/excluir/{id}', [AnoLetivoController::class, 'excluir']);
-		Route::get('/ano_letivo/editar/{id?}', [AnoLetivoController::class, 'editar']);
-		Route::post('/ano_letivo/salvar', [AnoLetivoController::class, 'salvar']);
+		Route::get('/ano_letivo/listar', [AnoLetivoController::class, 'listar'])->name('ano_letivo.listar');
+		Route::get('/ano_letivo/excluir/{id}', [AnoLetivoController::class, 'excluir'])->name('ano_letivo.excluir');
+		Route::get('/ano_letivo/editar/{id?}', [AnoLetivoController::class, 'editar'])->name('ano_letivo.editar');
+		Route::post('/ano_letivo/salvar', [AnoLetivoController::class, 'salvar'])->name('ano_letivo.salvar');
 
-		Route::get('/turma/listar/{ano_letivo_id}', [TurmaController::class, 'listar']);
-		Route::get('/turma/excluir/{id}', [TurmaController::class, 'excluir']);
-		Route::get('/turma/editar/{ano_letivo_id}/{id?}', [TurmaController::class, 'editar']);
-		Route::post('/turma/salvar', [TurmaController::class, 'salvar']);
+		Route::get('/turma/listar/{ano_letivo_id}', [TurmaController::class, 'listar'])->name('turma.listar');
+		Route::get('/turma/excluir/{id}', [TurmaController::class, 'excluir'])->name('turma.excluir');
+		Route::get('/turma/editar/{ano_letivo_id}/{id?}', [TurmaController::class, 'editar'])->name('turma.editar');
+		Route::post('/turma/salvar', [TurmaController::class, 'salvar'])->name('turma.salvar');
 
-		Route::get('/ano_letivo/relatorios', [AnoLetivoController::class, 'relatorios']);
-		Route::get('/ano_letivo/relatorio_respostas/{id}', [AnoLetivoController::class, 'relatorio_respostas']);
-		Route::get('/ano_letivo/relatorio_exportar/{id}', [AnoLetivoController::class, 'relatorio_exportar']);
+		Route::get('/ano_letivo/relatorios', [AnoLetivoController::class, 'relatorios'])->name('ano_letivo.relatorios');
+		Route::get('/ano_letivo/relatorio_respostas/{id}', [AnoLetivoController::class, 'relatorio_respostas'])->name('ano_letivo.relatorio_respostas');
+		Route::get('/ano_letivo/relatorio_exportar/{id}', [AnoLetivoController::class, 'relatorio_exportar'])->name('ano_letivo.relatorio_exportar');
 	});
 });
 

@@ -117,7 +117,7 @@
 		<div style="margin: 15px 0; padding: 15px; background-color: #e7f3ff; border-left: 3px solid #007bff; border-radius: 5px;">
 			<h6 style="color: #0056b3; margin-bottom: 10px;"><b>Arquivo de Autorização</b></h6>
 			<p style="color: #0056b3; margin-bottom: 10px;">{{ $dia->anexo->comentario ?: 'Arquivo de autorização enviado' }}</p>
-			<a href="{{ action('AnexoController@visualizar', ['id' => $dia->anexo->id]) }}" target="_blank" class="btn btn-sm btn-outline-success">Visualizar Documento</a>
+			<a href="{{ route('anexo.visualizar', ['id' => $dia->anexo->id]) }}" target="_blank" class="btn btn-sm btn-outline-success">Visualizar Documento</a>
 		</div>
 		@else
 		<p>Não há.</p>

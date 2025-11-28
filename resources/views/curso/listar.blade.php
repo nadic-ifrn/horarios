@@ -25,9 +25,9 @@
 					<td>{{ $curso->nome }}</td>
 					<td>{{ $curso->sigla }}</td>
 					<td>
-						<a href="{{ action('CursoController@excluir', ['id' => $curso->id]) }}" class="btn btn-danger excluir">Excluir</a>
-						<a href="{{ action('CursoController@editar', ['id' => $curso->id]) }}" class="btn btn-warning">Editar</a>
-						<a href="{{ action('PeriodoController@listar', ['curso_id' => $curso->id]) }}" class="btn btn-link">Listar Períodos</a>
+						<a href="{{ route('curso.excluir', ['id' => $curso->id]) }}" class="btn btn-danger excluir">Excluir</a>
+						<a href="{{ route('curso.editar', ['id' => $curso->id]) }}" class="btn btn-warning">Editar</a>
+						<a href="{{ route('periodo.listar', ['curso_id' => $curso->id]) }}" class="btn btn-link">Listar Períodos</a>
 					</td>
 				</tr>
 				@empty
@@ -38,7 +38,7 @@
 			</tbody>
 		</table>
 		<div class="text-right">
-			<a href="{{ action('CursoController@editar') }}" class="btn btn-success">Adicionar Novo Curso</a>
+			<a href="{{ route('curso.editar') }}" class="btn btn-success">Adicionar Novo Curso</a>
 		</div>
 	</div>
 </div>

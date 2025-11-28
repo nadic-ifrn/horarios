@@ -18,9 +18,9 @@
 				</h5>
 				<p class="card-text">{{ (!$ano->concluido) ? 'O período encontra-se aberto para submissão do questionário.' : 'O período encontra-se fechado.' }}</p>
 				@if(!$ano->concluido)
-				<a href="{{ action('QuestionarioController@responder', ['id' => $ano->id]) }}" class="card-link">Preencher Questionário</a>
+				<a href="{{ route('questionario.responder', ['id' => $ano->id]) }}" class="card-link">Preencher Questionário</a>
 				@endif
-				<a href="{{ action('QuestionarioController@listar', ['id' => $ano->id]) }}" class="card-link">Visualizar</a>
+				<a href="{{ route('questionario.listar', ['idAnoLetivo' => $ano->id]) }}" class="card-link">Visualizar</a>
 			</div>
 		</div>
 		<hr />

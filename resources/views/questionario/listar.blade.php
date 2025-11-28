@@ -22,7 +22,7 @@
 					<td><span class="badge badge-success">OK</span> em {{ $dia->updated_at }}</td>
 					<td width="150px">
 						@if($dia->professor->id == session()->get('usuario')->id || session()->get('usuario')->comissao)
-						<a href="{{ action('QuestionarioController@detalhar', ['id' => $dia->id]) }}" class="btn btn-link">Detalhar</a>
+						<a href="{{ route('questionario.detalhar', ['id' => $dia->id]) }}" class="btn btn-link">Detalhar</a>
 						@endif
 					</td>
 				</tr>

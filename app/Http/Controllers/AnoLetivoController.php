@@ -30,7 +30,7 @@ class AnoLetivoController extends Controller
 				session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Não foi possível excluir o período letivo, verifique se não há dependências de turmas para este registro.']);
 			}
 		}
-		return redirect()->action('AnoLetivoController@listar');
+		return redirect()->route('ano_letivo.listar');
 	}
 
 	public function editar($id = null) {
@@ -54,7 +54,7 @@ class AnoLetivoController extends Controller
 		} catch (\Exception $e) {
 			session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Erro ao salvar período letivo, contate o administrador.']);
 		}
-		return redirect()->action('AnoLetivoController@listar');
+		return redirect()->route('ano_letivo.listar');
 	}
 
 	public function relatorios() {

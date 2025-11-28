@@ -7,8 +7,8 @@
 <h4>Edição de Turma do Período Letivo {{ $ano->ano }}.{{ $ano->semestre }}</h4>
 <div class="card">
 	<div class="card-body">
-		<form id="form" method="POST" action="{{ action('TurmaController@salvar') }}">
-			{{ csrf_field() }}
+		<form id="form" method="POST" action="{{ route('turma.salvar') }}">
+			@csrf
 			<input type="hidden" name="ano_letivo_id" value="{{ $ano->id }}">
 			<input type="hidden" name="id" value="{{ $turma->id }}">
 			<div class="form-group" style="margin-top: 10px">
@@ -32,7 +32,7 @@
 				<input type="text" class="form-control" name="observacao" id="observacao" maxlength="200" value="{{ $turma->observacao }}">
 			</div>
 			<div class="text-right">
-				<a href="{{ action('TurmaController@listar', ['ano_letivo_id' => $ano->id]) }}" class="btn btn-link">
+				<a href="{{ route('turma.listar', ['ano_letivo_id' => $ano->id]) }}" class="btn btn-link">
 					<span class="nc-icon nc-minimal-left"></span> Voltar
 				</a>
 				<button class="btn btn-primary" type="submit">

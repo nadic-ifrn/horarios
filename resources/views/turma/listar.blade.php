@@ -31,8 +31,8 @@
 					<td>{{ $turma->periodo->curso->nome }} ({{ $turma->periodo->curso->sigla }}.{{ substr($turma->periodo->nome, 0, 1) }}{{ $turma->turno }})</td>
 					<td>{{ $turma->observacao }}</td>
 					<td>
-						<a href="{{ action('TurmaController@excluir', ['id' => $turma->id]) }}" class="btn btn-danger excluir">Excluir</a>
-						<a href="{{ action('TurmaController@editar', ['ano_letivo_id' => $turma->ano_letivo->id, 'id' => $turma->id ]) }}" class="btn btn-warning">Editar</a>
+						<a href="{{ route('turma.excluir', ['id' => $turma->id]) }}" class="btn btn-danger excluir">Excluir</a>
+						<a href="{{ route('turma.editar', ['ano_letivo_id' => $turma->ano_letivo->id, 'id' => $turma->id ]) }}" class="btn btn-warning">Editar</a>
 					</td>
 				</tr>
 				@empty
@@ -43,10 +43,10 @@
 			</tbody>
 		</table>
 		<div class="text-right">
-			<a href="{{ action('AnoLetivoController@listar') }}" class="btn btn-link">
+			<a href="{{ route('ano_letivo.listar') }}" class="btn btn-link">
 				<span class="nc-icon nc-minimal-left"></span> Voltar
 			</a>
-			<a href="{{ action('TurmaController@editar', ['ano_letivo_id' => $ano->id]) }}" class="btn btn-success">Adicionar Nova Turma</a>
+			<a href="{{ route('turma.editar', ['ano_letivo_id' => $ano->id]) }}" class="btn btn-success">Adicionar Nova Turma</a>
 		</div>
 	</div>
 </div>

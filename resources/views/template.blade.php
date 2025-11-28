@@ -44,19 +44,19 @@
 					</li>
 					@if (session()->get('usuario')->comissao)
 					<li class="{{ (session()->get('sessao') == 'curso') ? 'active' : '' }}">
-						<a href="{{ action('CursoController@listar') }}">
+						<a href="{{ route('curso.listar') }}">
 							<i class="nc-icon nc-book-bookmark"></i>
 							<p>Cursos</p>
 						</a>
 					</li>
 					<li class="{{ (session()->get('sessao') == 'anoletivo') ? 'active' : '' }}">
-						<a href="{{ action('AnoLetivoController@listar') }}">
+						<a href="{{ route('ano_letivo.listar') }}">
 							<i class="nc-icon nc-calendar-60"></i>
 							<p>Períodos Letivos</p>
 						</a>
 					</li>
 					<li class="{{ (session()->get('sessao') == 'relatorios') ? 'active' : '' }}">
-						<a href="{{ action('AnoLetivoController@relatorios') }}">
+						<a href="{{ route('ano_letivo.relatorios') }}">
 							<i class="nc-icon nc-single-copy-04"></i>
 							<p>Relatórios</p>
 						</a>
@@ -69,7 +69,7 @@
 					</li>
 					@endif
 					<li>
-						<a href="{{ action('UsuarioController@sair') }}">
+						<a href="{{ route('logout') }}">
 							<i class="nc-icon nc-button-power"></i>
 							<p>Sair</p>
 						</a>
