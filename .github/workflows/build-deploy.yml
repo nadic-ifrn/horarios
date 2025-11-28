@@ -46,10 +46,17 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin;
-            cd /home/${{ secrets.SSH_USER }}/app;
-            docker compose pull;
-            docker compose stop app;
-            docker compose run --rm app php artisan optimize:clear;
-            docker compose run --rm app php artisan migrate;
-            docker compose up -d --remove-orphans
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            cd /home/${{ secrets.SSH_USER }}/app
+            docker compose pull
+            docker compose stop app
+            docker compose run --rm app php artisan route:clear
+            docker compose run --rm app php artisan view:clear
+            docker compose run --rm app php artisan config:clear
+            docker compose run --rm app php artisan cache:clear
+            docker compose run --rm app php artisan migrate --force
+            docker compose run --rm app php artisan route:cache
+            docker compose run --rm app php artisan config:cache
+            docker compose run --rm app php artisan view:cache
+            docker compose up -d --force-recreate --remove-orphans
+

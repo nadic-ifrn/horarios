@@ -27,6 +27,9 @@ Route::get('/', [HomeController::class, 'main'])->name('home');
 
 Route::group(['middleware' => 'visitante'], function() {
 	Route::post('/autenticar', [UsuarioController::class, 'autenticar'])->name('autenticar');
+	Route::get('/autenticar', function() {
+		return redirect()->route('home');
+	});
 });
 
 Route::group(['middleware' => 'usuario:comum'], function() {

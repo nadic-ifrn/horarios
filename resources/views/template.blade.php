@@ -116,7 +116,7 @@
 								<span class="copyright">
 									&copy; <script>
 										document.write(new Date().getFullYear())
-									</script>, template made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creative Tim</a>
+									</script>, template made with <i class="fa fa-heart heart"></i> by <a href="http://www.creative-tim.com">Creative Tim 0.2</a>
 								</span>
 							</div>
 						</div>

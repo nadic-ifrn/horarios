@@ -48,12 +48,12 @@ RUN chown -R www-data:www-data /var/www/html \
 # Cria script de entrypoint
 RUN echo '#!/bin/bash\n\
     set -e\n\
-    echo "Removendo cache PHP antigo..."\n\
     rm -rf bootstrap/cache/*.php\n\
-    echo "Limpando cache do Laravel..."\n\
-    php artisan optimize:clear || true\n\
-    echo "Cache limpo!"\n\
-    echo "Executando: $@"\n\
+    rm -rf storage/framework/views/*.php\n\
+    php artisan route:clear || true\n\
+    php artisan view:clear || true\n\
+    php artisan config:clear || true\n\
+    php artisan cache:clear || true\n\
     exec "$@"' > /usr/local/bin/docker-entrypoint.sh \
     && chmod +x /usr/local/bin/docker-entrypoint.sh
 
