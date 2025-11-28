@@ -29,6 +29,12 @@ class UsuarioController extends Controller
 				session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Você não pertence ao campus ' . Config::get('app.campus') . '.']);
 			}
 		} catch (\Exception $e) {
+			\Illuminate\Support\Facades\Log::error('Erro na autenticação: ' . $e->getMessage());
+			\Illuminate\Support\Facades\Log::error($e->getTraceAsString());
+			
+			// DEBUG TEMPORÁRIO: Mostrar erro na tela
+			dd($e->getMessage(), $e->getTraceAsString());
+
 			session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Matrícula e/ou senha inválido(s).']);
 		}
 		return redirect('/');
