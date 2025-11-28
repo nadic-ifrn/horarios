@@ -16,8 +16,8 @@
 		</div>
 	</div>
 	<div class="card-body">
-		<form id="questionario" enctype="multipart/form-data" method="POST" action="{{ action('QuestionarioController@submeter') }}">
-			{{ csrf_field() }}
+		<form id="questionario" enctype="multipart/form-data" method="POST" action="{{ route('questionario.submeter') }}">
+			@csrf
 			<input type="hidden" name="id" value="{{ $ano->id }}">
 			<ul class="list-unstyled">
 				<li>Os dias pretendidos serão formados por dois grupos: Segunda à Quarta ou Quarta à Sexta;</li>

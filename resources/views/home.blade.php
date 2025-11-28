@@ -15,8 +15,8 @@
 				<h5 class="card-title">Login</h5>
 			</div>
 			<div class="card-body">
-				<form action="{{ action('UsuarioController@autenticar') }}" method="POST">
-					{{ csrf_field() }}
+				<form action="{{ route('autenticar') }}" method="POST">
+					@csrf
 					<div class="form-group">
 						<label for="matricula">Matrícula</label>
 						<input required="required" type="text" class="form-control" name="matricula" id="matricula" aria-describedby="matriculaHelp" placeholder="Matrícula SIAPE">

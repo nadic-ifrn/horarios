@@ -1,6 +1,8 @@
 services:
   app:
     build: .
+    entrypoint: [ "/usr/local/bin/docker-entrypoint.sh" ]
+    command: [ "apache2-foreground" ]
     ports:
       - "8000:80"
     volumes:
@@ -29,6 +31,8 @@ services:
       MYSQL_ROOT_PASSWORD: horarios@ifrn
     volumes:
       - dbdata:/var/lib/mysql
+    ports:
+      - "3306:3306"
 
 volumes:
   dbdata:
