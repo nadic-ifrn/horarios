@@ -75,7 +75,7 @@ class SUAPClient
     {
         // Se estiver acessando com uma chave de acesso...
         if ($accessKey) {
-            $url = $this->endpoint.'edu/autenticacao/acesso-responsaveis/';
+            $url = $this->endpoint.'ensino/autenticacao/acesso-responsaveis/';
 
             $params = [
                 'matricula' => $username,

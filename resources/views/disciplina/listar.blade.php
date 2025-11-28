@@ -27,8 +27,8 @@
 					<td>{{ $disciplina->nome }}</td>
 					<td>{{ $disciplina->ch_semanal }}</td>
 					<td>
-						<a href="{{ action('DisciplinaController@excluir', ['id' => $disciplina->id]) }}" class="btn btn-danger excluir">Excluir</a>
-						<a href="{{ action('DisciplinaController@editar', ['periodo_id' => $disciplina->periodo->id, 'id' => $disciplina->id]) }}" class="btn btn-warning">Editar</a>
+						<a href="{{ route('disciplina.excluir', ['id' => $disciplina->id]) }}" class="btn btn-danger excluir">Excluir</a>
+						<a href="{{ route('disciplina.editar', ['periodo_id' => $disciplina->periodo->id, 'id' => $disciplina->id]) }}" class="btn btn-warning">Editar</a>
 					</td>
 				</tr>
 				@empty
@@ -39,10 +39,10 @@
 			</tbody>
 		</table>
 		<div class="text-right">
-			<a href="{{ action('PeriodoController@listar', ['curso_id' => $periodo->curso->id]) }}" class="btn btn-link">
+			<a href="{{ route('periodo.listar', ['curso_id' => $periodo->curso->id]) }}" class="btn btn-link">
 				<span class="nc-icon nc-minimal-left"></span> Voltar
 			</a>
-			<a href="{{ action('DisciplinaController@editar', ['periodo_id' => $periodo->id]) }}" class="btn btn-success">Adicionar Nova Disciplina</a>
+			<a href="{{ route('disciplina.editar', ['periodo_id' => $periodo->id]) }}" class="btn btn-success">Adicionar Nova Disciplina</a>
 		</div>
 	</div>
 </div>

@@ -16,7 +16,7 @@ class TurmaController extends Controller
 			$ano = AnoLetivo::find($ano_letivo_id);
 			return view('turma.listar', compact('ano'));
 		} catch (\Exception $e) {
-			return redirect()->action('AnoLetivoController@listar');
+			return redirect()->route('ano_letivo.listar');
 		}
 	}
 
@@ -29,9 +29,9 @@ class TurmaController extends Controller
 			} catch (\Exception $e) {
 				session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Não foi possível excluir a turma, verifique se não há respostas de questionários relacionadas a esta turma.']);
 			}
-			return redirect()->action('TurmaController@listar', ['ano_letivo_id' => $turma->ano_letivo->id]);
+			return redirect()->route('turma.listar', ['ano_letivo_id' => $turma->ano_letivo->id]);
 		}
-		return redirect()->action('AnoLetivoController@listar');
+		return redirect()->route('ano_letivo.listar');
 	}
 
 	public function editar($ano_letivo_id, $id = null) {
@@ -59,7 +59,7 @@ class TurmaController extends Controller
 		} catch (\Exception $e) {
 			session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Erro ao salvar turma, contate o administrador.']);
 		}
-		return redirect()->action('TurmaController@listar', ['ano_letivo_id' => $turma->ano_letivo->id]);
+		return redirect()->route('turma.listar', ['ano_letivo_id' => $turma->ano_letivo->id]);
 	}
 
 }

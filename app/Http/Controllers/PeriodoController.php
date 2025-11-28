@@ -14,7 +14,7 @@ class PeriodoController extends Controller
 			$curso = Curso::find($curso_id);
 			return view('periodo.listar', compact('curso'));
 		} catch (\Exception $e) {
-			return redirect()->action('CursoController@listar');
+			return redirect()->route('curso.listar');
 		}
 	}
 
@@ -27,9 +27,9 @@ class PeriodoController extends Controller
 			} catch (\Exception $e) {
 				session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Não foi possível excluir o período, verifique se não há dependências de disciplinas para este registro.']);
 			}
-			return redirect()->action('PeriodoController@listar', ['curso_id' => $periodo->curso->id]);
+			return redirect()->route('periodo.listar', ['curso_id' => $periodo->curso->id]);
 		}
-		return redirect()->action('CursoController@listar');
+		return redirect()->route('curso.listar');
 	}
 
 	public function editar($curso_id, $id = null) {
@@ -55,7 +55,7 @@ class PeriodoController extends Controller
 		} catch (\Exception $e) {
 			session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Erro ao salvar período, contate o administrador.']);
 		}
-		return redirect()->action('PeriodoController@listar', ['curso_id' => $periodo->curso->id]);
+		return redirect()->route('periodo.listar', ['curso_id' => $periodo->curso->id]);
 	}
 
 }

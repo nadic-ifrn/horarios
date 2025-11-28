@@ -24,7 +24,7 @@ class CursoController extends Controller
 				session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Não foi possível excluir o curso, verifique se não há dependências de períodos para este registro.']);
 			}
 		}
-		return redirect()->action('CursoController@listar');
+		return redirect()->route('curso.listar');
 	}
 
 	public function editar($id = null) {
@@ -48,7 +48,7 @@ class CursoController extends Controller
 		} catch (\Exception $e) {
 			session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Erro ao salvar curso, contate o administrador.']);
 		}
-		return redirect()->action('CursoController@listar');
+		return redirect()->route('curso.listar');
 	}
 
 }

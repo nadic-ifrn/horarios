@@ -36,9 +36,9 @@
 					<td>{{ $periodo->nome }}</td>
 					<td>{{ $periodo->disciplinas()->sum('ch_semanal') }}</td>
 					<td>
-						<a href="{{ action('PeriodoController@excluir', ['id' => $periodo->id]) }}" class="btn btn-danger excluir">Excluir</a>
-						<a href="{{ action('PeriodoController@editar', ['curso_id' => $periodo->curso->id, 'id' => $periodo->id ]) }}" class="btn btn-warning">Editar</a>
-						<a href="{{ action('DisciplinaController@listar', ['periodo_id' => $periodo->id]) }}" class="btn btn-link">Listar Disciplinas</a>
+						<a href="{{ route('periodo.excluir', ['id' => $periodo->id]) }}" class="btn btn-danger excluir">Excluir</a>
+						<a href="{{ route('periodo.editar', ['curso_id' => $periodo->curso->id, 'id' => $periodo->id ]) }}" class="btn btn-warning">Editar</a>
+						<a href="{{ route('disciplina.listar', ['periodo_id' => $periodo->id]) }}" class="btn btn-link">Listar Disciplinas</a>
 					</td>
 				</tr>
 				@empty
@@ -49,10 +49,10 @@
 			</tbody>
 		</table>
 		<div class="text-right">
-			<a href="{{ action('CursoController@listar') }}" class="btn btn-link">
+			<a href="{{ route('curso.listar') }}" class="btn btn-link">
 				<span class="nc-icon nc-minimal-left"></span> Voltar
 			</a>
-			<a href="{{ action('PeriodoController@editar', ['curso_id' => $curso->id]) }}" class="btn btn-success">Adicionar Novo Período</a>
+			<a href="{{ route('periodo.editar', ['curso_id' => $curso->id]) }}" class="btn btn-success">Adicionar Novo Período</a>
 		</div>
 	</div>
 </div>

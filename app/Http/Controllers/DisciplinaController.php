@@ -24,7 +24,7 @@ class DisciplinaController extends Controller
 			$periodo = Periodo::find($periodo_id);
 			return view('disciplina.listar', compact('periodo'));
 		} catch (\Exception $e) {
-			return redirect()->action('CursoController@listar');
+			return redirect()->route('curso.listar');
 		}
 	}
 
@@ -37,9 +37,9 @@ class DisciplinaController extends Controller
 			} catch (\Exception $e) {
 				session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Não foi possível excluir a disciplina, verifique se não há dependências de professores que responderam o questionário e utilizaram esta disciplina na resposta.']);
 			}
-			return redirect()->action('DisciplinaController@listar', ['periodo_id' => $disciplina->periodo->id]);
+			return redirect()->route('disciplina.listar', ['periodo_id' => $disciplina->periodo->id]);
 		}
-		return redirect()->action('CursoController@listar');
+		return redirect()->route('curso.listar');
 	}
 
 	public function editar($periodo_id, $id = null) {
@@ -65,7 +65,7 @@ class DisciplinaController extends Controller
 		} catch (\Exception $e) {
 			session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Erro ao salvar disciplina, contate o administrador.']);
 		}
-		return redirect()->action('DisciplinaController@listar', ['periodo_id' => $disciplina->periodo->id]);
+		return redirect()->route('disciplina.listar', ['periodo_id' => $disciplina->periodo->id]);
 	}
 
 }
