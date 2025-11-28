@@ -35,6 +35,9 @@ RUN sed -ri \
 # Copia o restante da aplicação
 COPY . .
 
+# Remove cache PHP antigo ANTES de qualquer comando artisan
+RUN rm -rf bootstrap/cache/*.php
+
 # Executa o Composer
 RUN composer install --no-interaction --prefer-dist --optimize-autoloader
 RUN ls -la
@@ -42,5 +45,18 @@ RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 755 /var/www/html \
     && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Comando padrão
+# Cria script de entrypoint
+RUN echo '#!/bin/bash\n\
+    set -e\n\
+    rm -rf bootstrap/cache/*.php\n\
+    rm -rf storage/framework/views/*.php\n\
+    php artisan route:clear || true\n\
+    php artisan view:clear || true\n\
+    php artisan config:clear || true\n\
+    php artisan cache:clear || true\n\
+    exec "$@"' > /usr/local/bin/docker-entrypoint.sh \
+    && chmod +x /usr/local/bin/docker-entrypoint.sh
+
+# Comando padrão (pode ser sobrescrito)
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
