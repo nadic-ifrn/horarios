@@ -12,10 +12,10 @@
 	<div class="col-md-8">
 		<div class="card">
 			<div class="card-header">
-				<h5 class="card-title">Login v2</h5>
+				<h5 class="card-title">Login</h5>
 			</div>
 			<div class="card-body">
-				<form action="{{ route('autenticar') }}" method="POST">
+				<form action="/autenticar" method="POST">
 					@csrf
 					<div class="form-group">
 						<label for="matricula">Matrícula</label>
