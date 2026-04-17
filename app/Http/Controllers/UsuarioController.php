@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Classes\SUAPClient;
 use App\Professor;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Support\Facades\Config;
 use Exception;
 
@@ -14,7 +15,7 @@ class UsuarioController extends Controller
 	{
 		$suap = new SUAPClient();
 		try {
-			$token = $suap->autenticar($request->matricula, $request->senha);
+			$suap->autenticar($request->matricula, $request->senha);
 			$dados = $suap->getMeusDados();
 			if ($dados['vinculo']['campus'] == Config::get('app.campus')) {
 				$usuario = $this->createOrUpdateProfessor($dados);
@@ -28,14 +29,19 @@ class UsuarioController extends Controller
 			} else {
 				session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Você não pertence ao campus ' . Config::get('app.campus') . '.']);
 			}
+		} catch (RequestException $e) {
+			\Illuminate\Support\Facades\Log::error('Erro na autenticação: ' . $e->getMessage());
+
+			$statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : null;
+			if ($statusCode === 401) {
+				session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Matrícula e/ou senha inválido(s).']);
+			} else {
+				session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Não foi possível autenticar no SUAP no momento. Tente novamente em instantes.']);
+			}
 		} catch (\Exception $e) {
 			\Illuminate\Support\Facades\Log::error('Erro na autenticação: ' . $e->getMessage());
 			\Illuminate\Support\Facades\Log::error($e->getTraceAsString());
-			
-			// DEBUG TEMPORÁRIO: Mostrar erro na tela
-			dd($e->getMessage(), $e->getTraceAsString());
-
-			session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Matrícula e/ou senha inválido(s).']);
+			session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Não foi possível autenticar no SUAP no momento. Tente novamente em instantes.']);
 		}
 		return redirect('/');
 	}
@@ -68,7 +74,16 @@ class UsuarioController extends Controller
 			} else {
 				return response()->json(['erro' => 'Matrícula e/ou senha inválido(s).'], 422);
 			}
+		} catch (RequestException $e) {
+			$statusCode = $e->hasResponse() ? $e->getResponse()->getStatusCode() : null;
+			if ($statusCode === 401) {
+				return response()->json(['erro' => 'Matrícula e/ou senha inválido(s).'], 422);
+			}
+
+			\Illuminate\Support\Facades\Log::error('Erro na autenticação JSON: ' . $e->getMessage());
+			return response()->json(['erro' => 'Não foi possível autenticar no SUAP no momento.'], 503);
 		} catch (Exception $e) {
+			\Illuminate\Support\Facades\Log::error('Erro interno na autenticação JSON: ' . $e->getMessage());
 			return response()->json(['erro' => 'Erro interno do servidor.'], 500);
 		}
 	}
