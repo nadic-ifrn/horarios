@@ -11,6 +11,7 @@ use App\Http\Controllers\PeriodoController;
 use App\Http\Controllers\AnoLetivoController;
 use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ImportarHorarios20262Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -91,4 +92,7 @@ Route::group(['middleware' => 'usuario:comissao'], function () {	// Gerenciament
 	Route::get('/admin/sql-executor', [AdminController::class, 'sqlExecutor'])->name('admin.sql-executor');
 	Route::post('/admin/sql-executor', [AdminController::class, 'executeSql'])->name('admin.sql-execute');
 	Route::get('/admin/sql-export-all', [AdminController::class, 'exportAllTables'])->name('admin.sql-export-all');
+
+	Route::get('/admin/importar-2026-2', [ImportarHorarios20262Controller::class, 'index'])->name('importar-2026-2.index');
+	Route::post('/admin/importar-2026-2', [ImportarHorarios20262Controller::class, 'executar'])->name('importar-2026-2.executar');
 });
