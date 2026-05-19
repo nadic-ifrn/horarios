@@ -1,6 +1,8 @@
-@extends('layouts.app')
+@extends('template')
 
-@section('content')
+@section('titulo', 'Importar Horários 2026.2')
+
+@section('conteudo')
 <div class="container mt-4">
     <h3>Importar Horários 2026.2</h3>
 
