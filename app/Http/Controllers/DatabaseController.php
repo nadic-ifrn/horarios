@@ -169,13 +169,24 @@ class DatabaseController extends Controller
         $error = null;
 
         try {
-            // Para queries SELECT
-            if (stripos(trim($sql), 'SELECT') === 0) {
-                $results = DB::select($sql);
+            $statements = $this->splitSqlStatements($sql);
+
+            if (count($statements) === 1 && stripos(trim($statements[0]), 'SELECT') === 0) {
+                $results = DB::select($statements[0]);
             } else {
-                // Para queries INSERT, UPDATE, DELETE
-                $affected = DB::statement($sql);
-                $results = ['message' => 'Query executada com sucesso!', 'affected_rows' => $affected];
+                $totalAffected = 0;
+                foreach ($statements as $stmt) {
+                    if (stripos(trim($stmt), 'SELECT') === 0) {
+                        DB::select($stmt);
+                    } else {
+                        DB::statement($stmt);
+                        $totalAffected += DB::affectingStatement('SELECT ROW_COUNT()') ?? 0;
+                    }
+                }
+                $results = [
+                    'message' => count($statements) . ' statement(s) executado(s) com sucesso!',
+                    'affected_rows' => $totalAffected,
+                ];
             }
         } catch (\Exception $e) {
             $error = $e->getMessage();
@@ -186,6 +197,53 @@ class DatabaseController extends Controller
             'results' => $results,
             'error' => $error
         ]);
+    }
+
+    private function splitSqlStatements(string $sql): array
+    {
+        $statements = [];
+        $current = '';
+        $inString = false;
+        $stringChar = '';
+        $len = strlen($sql);
+
+        for ($i = 0; $i < $len; $i++) {
+            $char = $sql[$i];
+
+            // Ignora comentários de linha (-- ...) fora de strings
+            if (!$inString && $char === '-' && isset($sql[$i + 1]) && $sql[$i + 1] === '-') {
+                while ($i < $len && $sql[$i] !== "\n") {
+                    $i++;
+                }
+                $current .= "\n";
+                continue;
+            }
+
+            // Controla abertura/fechamento de strings
+            if (!$inString && ($char === '\'' || $char === '"')) {
+                $inString = true;
+                $stringChar = $char;
+            } elseif ($inString && $char === $stringChar && (!isset($sql[$i - 1]) || $sql[$i - 1] !== '\\')) {
+                $inString = false;
+            }
+
+            if (!$inString && $char === ';') {
+                $trimmed = trim($current);
+                if ($trimmed !== '') {
+                    $statements[] = $trimmed;
+                }
+                $current = '';
+            } else {
+                $current .= $char;
+            }
+        }
+
+        $trimmed = trim($current);
+        if ($trimmed !== '') {
+            $statements[] = $trimmed;
+        }
+
+        return $statements;
     }
 
     private function getForeignKeys($table)
