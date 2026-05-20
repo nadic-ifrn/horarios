@@ -83,10 +83,10 @@ $(document).ready(function () {
             return;
         }
 
-        // Verificar se a disciplina já foi adicionada
+        // Verificar se a combinação turma+disciplina já foi adicionada
         var jaAdicionada = false;
         $(".q2_d").each(function () {
-            if ($(this).val() == disciplinaId) {
+            if ($(this).val() == disciplinaId && $(this).siblings('.q2_t').val() == turmaId) {
                 jaAdicionada = true;
                 return false;
             }
