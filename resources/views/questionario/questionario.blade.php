@@ -99,7 +99,7 @@
 				<div class="col-6">
 					<div class="form-group">
 						<label for="q2_turma">Selecione primeiro a turma <sup class="required">*</sup></label>
-						<select class="form-control" id="q2_turma" required>
+						<select class="form-control" id="q2_turma">
 							<option value="">Selecione uma turma...</option>
 							@foreach($ano->turmas()->join('periodos', 'periodos.id', '=', 'turmas.periodo_id')->join('cursos', 'cursos.id', '=', 'periodos.curso_id')->orderBy('cursos.nome')->get(['turmas.*']) as $turma)
 							<option value="{{ $turma->id }}">{{ $turma->periodo->curso->nome }} ({{ $turma->periodo->curso->sigla }}.{{ substr($turma->periodo->nome, 0, 1) }}{{ $turma->turno }})</option>

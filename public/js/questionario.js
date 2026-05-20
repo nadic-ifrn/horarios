@@ -131,6 +131,7 @@ $(document).ready(function () {
         // Limpar seleções após adicionar
         $("#q2_disciplina").val("").trigger("change");
         $("#q2_turma").val("").trigger("change");
+        $("#q2_turma, #q2_disciplina").removeClass("error").next(".invalid-feedback").remove();
 
         test();
     });
