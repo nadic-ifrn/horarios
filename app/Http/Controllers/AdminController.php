@@ -144,10 +144,22 @@ class AdminController extends Controller
         }
 
         try {
-            DB::table($table)->where('id', $id)->delete();
-            return redirect()->route('admin.table', $table)->with('success', 'Registro excluído com sucesso');
+            DB::transaction(function () use ($table, $id) {
+                if ($table === 'dias') {
+                    $anexo = DB::table('anexos')->where('dia_id', $id)->first();
+                    if ($anexo) {
+                        \Illuminate\Support\Facades\Storage::delete($anexo->local);
+                    }
+                    DB::table('anexos')->where('dia_id', $id)->delete();
+                    DB::table('cargas')->where('dia_id', $id)->delete();
+                }
+                DB::table($table)->where('id', $id)->delete();
+            });
+            session()->flash('flash', ['tipo' => 'success', 'mensagem' => 'Registro excluído com sucesso.']);
+            return redirect()->route('admin.table', $table);
         } catch (\Exception $e) {
-            return back()->with('error', 'Erro ao excluir registro: ' . $e->getMessage());
+            session()->flash('flash', ['tipo' => 'danger', 'mensagem' => 'Erro ao excluir registro: ' . $e->getMessage()]);
+            return back();
         }
     }
 
