@@ -12,6 +12,7 @@ use App\Http\Controllers\AnoLetivoController;
 use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ImportarHorarios20262Controller;
+use App\Http\Controllers\CorrecaoEliaquim20262Controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -95,4 +96,7 @@ Route::group(['middleware' => 'usuario:comissao'], function () {	// Gerenciament
 
 	Route::get('/admin/importar-2026-2', [ImportarHorarios20262Controller::class, 'index'])->name('importar-2026-2.index');
 	Route::post('/admin/importar-2026-2', [ImportarHorarios20262Controller::class, 'executar'])->name('importar-2026-2.executar');
+
+	Route::get('/admin/correcao-eliaquim-2026-2', [CorrecaoEliaquim20262Controller::class, 'index'])->name('correcao-eliaquim.index');
+	Route::post('/admin/correcao-eliaquim-2026-2', [CorrecaoEliaquim20262Controller::class, 'executar'])->name('correcao-eliaquim.executar');
 });
