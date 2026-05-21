@@ -62,6 +62,12 @@
                     <pre>{{ $error }}</pre>
                 </div>
                 @endif
+                @if(isset($affected) && $affected !== null)
+                <div class="alert alert-success">
+                    <i class="nc-icon nc-check-2"></i>
+                    Comando executado com sucesso. Registros afetados: <strong>{{ $affected }}</strong>
+                </div>
+                @endif
                 @if(isset($results))
                 <div class="card mt-4">
                     <div class="card-header">

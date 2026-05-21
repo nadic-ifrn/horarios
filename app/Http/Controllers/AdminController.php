@@ -173,18 +173,23 @@ class AdminController extends Controller
         $sql = $request->input('sql');
         $results = null;
         $error = null;
+        $affected = null;
 
         if (empty($sql)) {
             return back()->with('error', 'Digite uma consulta SQL');
         }
 
         try {
-            $results = DB::select($sql);
+            if (preg_match('/^\s*SELECT\b/i', $sql)) {
+                $results = DB::select($sql);
+            } else {
+                $affected = DB::affectingStatement($sql);
+            }
         } catch (\Exception $e) {
             $error = $e->getMessage();
         }
 
-        return view('admin.sql-executor', compact('sql', 'results', 'error'));
+        return view('admin.sql-executor', compact('sql', 'results', 'error', 'affected'));
     }
 
     public function exportAllTables()
