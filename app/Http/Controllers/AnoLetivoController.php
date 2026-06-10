@@ -166,7 +166,7 @@ class AnoLetivoController extends Controller
 		$xml .= "</lessons></timetable>";
 		$ano = AnoLetivo::find($id);
 		return response($xml)->withHeaders([
-			"Content-Type" => "text/xml",
+			"Content-Type" => "application/octet-stream",
 			"Content-Disposition" => "attachment; filename=\"db_{$ano->ano}_{$ano->semestre}.xml\""
 		]);
 	}
